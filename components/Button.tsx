@@ -2,10 +2,16 @@
 
 import { Button } from "./ui/button"
 
-export default function ButtonPink({children}:{children:React.ReactNode}){
+type ButtonPinkProps = {
+    children:React.ReactNode;
+    paddingY: string;
+    paddingX: string;
+}
+
+export default function ButtonPink({children, paddingY, paddingX}:ButtonPinkProps){
     return(
         <>
-            <Button className="bg-[#E24848] text-white font-semibold rounded-3xl px-12 py-5 hover:bg-teal-700">{children}</Button>
+            <Button className="bg-[#E24848] text-white font-semibold rounded-full px-12 hover:bg-teal-700" style={{paddingTop:paddingY, paddingBottom:paddingY, paddingLeft:paddingX, paddingRight:paddingX}}>{children}</Button>
         </>
     )
 }
