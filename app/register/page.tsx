@@ -18,9 +18,6 @@ export default function Register(){
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
-    const [error, setError] = useState<string | null>(null);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
     const {toast} = useToast();
 
     const handleSubmit = async (e:React.FormEvent) => {
@@ -37,7 +34,6 @@ export default function Register(){
         //call the server action
         const result = await registerUser({fullname, email, password});
         if (result.success){
-            setSuccessMessage(result.message);
             setFullName('');
             setEmail('');
             setPassword('');
