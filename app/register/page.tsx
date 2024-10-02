@@ -8,6 +8,9 @@ import RegisterImage from "@/components/images/register.png"
 import { Input } from "@/components/ui/input"
 import { registerUser } from "./action"
 import { Button } from "@/components/ui/button"
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
+
 
 export default function Register(){
 
@@ -18,10 +21,17 @@ export default function Register(){
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+    const {toast} = useToast();
+
     const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword){
-            setError('Passwords do not match')
+            toast({
+                variant:"destructive",
+                title:"Uh oh! something went wrong",
+                description:"Passwords do not match",
+                action:<ToastAction altText="try again">Dismiss</ToastAction>,
+            })
             return;
         }
         //call the server action
@@ -32,9 +42,18 @@ export default function Register(){
             setEmail('');
             setPassword('');
             setConfirmPassword('');
+            toast({
+                title:"Yipee! You're in!",
+                description:"Registration was successfull",
+            })
         }
         else{
-            setError(result.message)
+            toast({
+                variant:"destructive",
+                title:"Uh oh! something went wrong",
+                description:"There was a problem with authentication",
+                action:<ToastAction altText="try again">Dismiss</ToastAction>,
+            })
         }
     }
 
@@ -68,8 +87,6 @@ export default function Register(){
                                 <Button type="submit" className="bg-[#E24848] text-white font-semibold rounded-full px-12 py-5 hover:bg-teal-700">Register</Button>
                             </div>
                         </form>
-                        {error && <p className="text-red-600 text-sm">{error}</p>}
-                        {successMessage && <p className="text-green-600 text-sm">{successMessage}</p>}
                     </div>
                 </div>
             </div>
