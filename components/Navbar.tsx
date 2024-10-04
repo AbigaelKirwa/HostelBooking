@@ -14,12 +14,12 @@ export default function() {
                     Home
                 </Link>
                 <Link href="#" className="font-semibold text-white text-xs px-5">
-                    Student Accommodations
+                    Accommodations
                 </Link>
                 <Link href="#footer" className="font-semibold text-white text-xs px-5">
                     Contacts
                 </Link>
-                <Link href="#" className="font-semibold text-white text-xs px-5">
+                <Link href="/faqs" className="font-semibold text-white text-xs px-5">
                     FAQs
                 </Link>
             </div>

@@ -5,9 +5,41 @@ import Image from "next/image"
 import Link from "next/link"
 import LoginImage from "@/components/images/login.png"
 import { Input } from "@/components/ui/input"
-import ButtonPink from "@/components/Button"
+import { LoginUser } from "./action"
+import React, { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast"
 
 export default function Register(){
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {toast} = useToast();
+
+    const handleSubmit = async(e:React.FormEvent)=>{
+        e.preventDefault();
+
+        const result = await LoginUser({email, password});
+
+        if(result.success){
+            toast({
+                title:'Success',
+                description:'Logged in successfully',
+                variant:"default"
+            })
+            setEmail('')
+            setPassword('')
+        }
+        else{
+            toast({
+                variant:"destructive",
+                title:"Uh oh! something went wrong",
+                description:"There was a problem with authentication",
+                action:<ToastAction altText="try again">Dismiss</ToastAction>,
+            })
+        }
+    }
 
     return(
         <div>
@@ -19,18 +51,18 @@ export default function Register(){
                     </div>
                     <div id="right" className="px-10 py-5 pt-24 w-1/2 bg-[#EBEBEB] rounded-l-[40px] max-md:rounded-[40px] max-md:py-20 max-md:pt-28 max-md:w-full">
                         <h1 className="font-bold text-2xl text-[#1E1846]">Login</h1>
-                        <form action="">
+                        <form onSubmit={handleSubmit}>
                             <div className="my-5">
-                                <Input type="email" required placeholder="Email" className="placeholder-[#767575] text-xs bg-[#D9D9D9] border-none rounded-[8px] w-full py-5 pl-5"/>
+                                <Input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} required placeholder="Email" className="placeholder-[#767575] text-xs bg-[#D9D9D9] border-none rounded-[8px] w-full py-5 pl-5"/>
                             </div>
                             <div className="my-5">
-                                <Input type="password" required placeholder="Password" className="placeholder-[#767575] text-xs bg-[#D9D9D9] border-none rounded-[8px] w-full py-5 pl-5"/>
+                                <Input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} required placeholder="Password" className="placeholder-[#767575] text-xs bg-[#D9D9D9] border-none rounded-[8px] w-full py-5 pl-5"/>
                             </div>
                             <div>
                                 <p className="text-xs text-end">Don't have an account? <Link href="/register"><b>Register</b></Link></p>
                             </div>
                             <div className="w-full flex justify-center mt-8">
-                                <ButtonPink paddingY="1.5em" paddingX="3.5em">Login</ButtonPink>
+                                <Button type="submit" className="bg-[#E24848] text-white font-semibold rounded-full px-12 py-5 hover:bg-teal-700">Login</Button>
                             </div>
                         </form>
                     </div>
