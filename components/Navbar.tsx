@@ -13,7 +13,7 @@ export default function() {
                 <Link href="/" className="font-semibold text-white text-xs px-5">
                     Home
                 </Link>
-                <Link href="#" className="font-semibold text-white text-xs px-5">
+                <Link href="/accomodations" className="font-semibold text-white text-xs px-5">
                     Accommodations
                 </Link>
                 <Link href="#footer" className="font-semibold text-white text-xs px-5">

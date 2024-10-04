@@ -1,3 +1,5 @@
+'use client'
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import {
@@ -75,11 +77,12 @@ export default function () {
     <div>
       <Navbar />
       <div className="flex flex-col px-20 py-14 items-center justify-center max-md:px-10">
+      <h2 className="font-bold text-5xl text-[#1E1846] mb-5 max-lg:text-5xl max-md:text-4xl">Common Questions</h2>
         {questions.map((question:any)=>(
-        <Accordion type="single" collapsible className="w-1/2 max-md:w-full" key={question.id}>
+        <Accordion type="single" collapsible className="w-1/2 mt-8 max-md:w-full" key={question.id}>
             <AccordionItem value={question.value}>
             <AccordionTrigger className="text-base font-semibold text-[#1E1846]">{question.query}</AccordionTrigger>
-            <AccordionContent className="text-gray-700">
+            <AccordionContent className="text-gray-700 leading-loose">
                 {question.answer}
             </AccordionContent>
             </AccordionItem>

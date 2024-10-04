@@ -10,6 +10,7 @@ import { registerUser } from "./action"
 import { Button } from "@/components/ui/button"
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/hooks/use-toast"
+import Footer from "@/components/Footer"
 
 
 export default function Register(){
@@ -57,7 +58,7 @@ export default function Register(){
         <div>
             <Navbar/>
             <div id="overall" className="flex justify-center py-11">
-                <div id="main" className="flex w-[68%]">
+                <div id="main" className="flex w-[68%] max-sm:w-full max-sm:px-5">
                     <div id="left" className="w-1/2 max-md:hidden max-md:w-0">
                         <Image src={RegisterImage} alt="main image" className="w-full h-full" />
                     </div>
@@ -86,6 +87,7 @@ export default function Register(){
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     )   
 }
