@@ -69,7 +69,7 @@ export default function Home() {
             options. Start your journey today!
           </p>
           <div className="mt-5">
-            <Link href="/accomodation">
+            <Link href="/accomodations">
               <ButtonPink paddingY="2em" paddingX="4em">Find Accomodation</ButtonPink>
             </Link>
           </div>
