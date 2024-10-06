@@ -1,33 +1,73 @@
-'use client'
+"use client";
 
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { NavigationMenu, NavigationMenuList, NavigationMenuLink } from "@/components/ui/navigation-menu"
-import ButtonPink from "./Button"
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+  } from "@/components/ui/sheet"
+import Link from "next/link";
+import ButtonPink from "./Button";
+import Image from "next/image";
+import MenuImage from "@/components/images/icons/menu.png"
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
-export default function() {
-    return (
-        <nav className="w-full flex items-center py-3 bg-gradient-to-r from-[#180F24] via-[#264A5A] to-[#1E1846] px-5">
-            <div className="flex justify-center flex-grow">
-                <Link href="/" className="font-semibold text-white text-xs px-5">
-                    Home
-                </Link>
-                <Link href="/accomodations" className="font-semibold text-white text-xs px-5">
-                    Accommodations
-                </Link>
-                <Link href="#footer" className="font-semibold text-white text-xs px-5">
-                    Contacts
-                </Link>
-                <Link href="/faqs" className="font-semibold text-white text-xs px-5">
-                    FAQs
-                </Link>
+
+export default function () {
+  return (
+    <nav className="w-full flex items-center py-3 bg-gradient-to-r from-[#180F24] via-[#264A5A] to-[#1E1846] px-5">
+      {/* this is the navbar on large screens */}
+      <div className="flex justify-center flex-grow max-md:hidden">
+        <Link href="/" className="font-semibold text-white text-xs px-5">
+          Home
+        </Link>
+        <Link
+          href="/accomodations"
+          className="font-semibold text-white text-xs px-5"
+        >
+          Accommodations
+        </Link>
+        <Link href="#footer" className="font-semibold text-white text-xs px-5">
+          Contacts
+        </Link>
+        <Link href="/faqs" className="font-semibold text-white text-xs px-5">
+          FAQs
+        </Link>
+      </div>
+
+      {/* this is the navbar on small screens */}
+      <div className="md:hidden block">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Image src={MenuImage} alt="opener" className="w-6"/>
+          </SheetTrigger>
+          <SheetContent side={"left"} className="bg-white text-[#2e2e2e]">
+            <SheetHeader>
+              <SheetTitle className="text-2xl">Menu</SheetTitle>
+            </SheetHeader>
+            <div className="grid py-10 -mx-5">
+                <div className="flex flex-col gap-y-10 ">
+                    <Link href="/" className="font-semibold text-sm px-5">Home</Link>
+                    <Link href="/accomodations" className="font-semibold text-sm px-5">Accommodations</Link>
+                    <Link href="#footer" className="font-semibold text-sm px-5">Contacts</Link>
+                    <Link href="/faqs" className="font-semibold text-sm px-5">FAQs</Link>
+                </div>
             </div>
-            <div className="ml-auto ">
-                <Link href="/login">
-                    <ButtonPink paddingY="1px" paddingX="2em"><span className="text-xs">Login</span></ButtonPink>
-                </Link>
-            </div>
-        </nav>
-    )
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <div className="ml-auto ">
+        <Link href="/login">
+          <ButtonPink paddingY="1px" paddingX="2em">
+            <span className="text-xs">Login</span>
+          </ButtonPink>
+        </Link>
+      </div>
+    </nav>
+  );
 }

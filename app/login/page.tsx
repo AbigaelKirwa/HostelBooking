@@ -12,7 +12,7 @@ import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/hooks/use-toast"
 import Footer from "@/components/Footer"
 
-export default function Register(){
+export default function Login(){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

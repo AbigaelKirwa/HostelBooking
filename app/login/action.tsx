@@ -17,6 +17,4 @@ export async function LoginUser({email,password}:{email:string, password:string}
         console.log("Login error:", error);
         return{ success:false, message: error.message}
     }
-
-
 }
