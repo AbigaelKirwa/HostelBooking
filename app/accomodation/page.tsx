@@ -69,7 +69,7 @@ export default function () {
             className="w-1/2 flex flex-col justify-center items-center px-10 text-justify gap-10 max-md:w-full max-md:flex max-md:justify-center max-md:items-center max-md:gap-5 max-md:px-9 max-sm:px-5"
           >
             <p className="text-sm leading-loose text-[#302F2F]">
-              Qejani Hostels provide a comfortable, secure, and student-focused
+              The Hostels provide a comfortable, secure, and student-focused
               living experience. With spacious, fully furnished rooms, 24/7
               security, and high-speed internet, students can enjoy a balanced
               environment for both study and relaxation.
@@ -95,7 +95,7 @@ export default function () {
             className="w-1/2 flex flex-col justify-center items-center px-14 text-justify gap-10 max-md:w-full max-md:flex max-md:gap-5 max-md:px-9 max-sm:px-5"
           >
             <p className="text-sm leading-loose text-[#302F2F]">
-              Qejani Hostels offer students spacious, well-ventilated rooms
+              The Hostels offer students spacious, well-ventilated rooms
               designed for comfort and practicality. Each room is fully
               furnished with a comfortable bed, study desk, and ample storage
               space, creating an environment where students can feel at home

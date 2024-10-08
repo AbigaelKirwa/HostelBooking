@@ -1,7 +1,7 @@
 'use server'
 
 import {db, auth} from "../../lib/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {collection, addDoc} from 'firebase/firestore';
 
 //server side function that will handle the form submission
@@ -9,6 +9,11 @@ export async function registerUser({fullname, email, password}:{fullname:string,
     try{
         //create a user with firebase authentication
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Set the displayName for the user
+        await updateProfile(userCredential.user, {
+            displayName: fullname
+        });
 
         //store additional user data in firestore
         await addDoc(collection(db,"users"),{

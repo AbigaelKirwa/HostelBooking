@@ -2,7 +2,6 @@
 
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetHeader,
     SheetTitle,
@@ -13,11 +12,78 @@ import ButtonPink from "./Button";
 import Image from "next/image";
 import MenuImage from "@/components/images/icons/menu.png"
 import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { onAuthStateChanged, signOut} from "firebase/auth";
+import {auth} from "@/lib/firebase"
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { toast } from "@/hooks/use-toast";
 
 
-export default function () {
+export default function Navbar() {
+
+  const [user, setUser]= useState<any>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("Auth state changed. Current user:", currentUser);
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+        console.log("No user is authenticated.");
+      }
+    });
+
+    // You can call onAuthStateChanged manually after login to ensure the UI updates
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Update the user state immediately after login
+        setUser(user);
+        console.log("user details updated", user)
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
+
+  const getInitials = (user: any) => {
+    if (!user) return "";
+
+    const name = user.displayName || user.email;
+    const nameArray = name.split(/[@ ]/); // Split by space or @ for email
+
+    if (nameArray.length > 1) {
+      return (nameArray[0][0] + nameArray[1][0]).toUpperCase();
+    } else {
+      return nameArray[0][0].toUpperCase(); // First letter of displayName or email
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      // Sign out successful
+      setUser(null);
+      toast({
+        title: 'Success',
+        description: 'Logged out successfully',
+        variant: "default"
+      });
+    } catch (error) {
+      // Error occurred
+      toast({
+        variant: "destructive",
+        title: "Uh oh! something went wrong",
+        description: "There was a problem logging you out",
+      });
+    }
+  };
+  
   return (
     <nav className="w-full flex items-center py-3 bg-gradient-to-r from-[#180F24] via-[#264A5A] to-[#1E1846] px-5">
       {/* this is the navbar on large screens */}
@@ -62,11 +128,26 @@ export default function () {
       </div>
 
       <div className="ml-auto ">
+      {user ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-gray-500 text-white font-semibold flex items-center justify-center rounded-full">
+                {getInitials(user)}
+              </div>
+            </div>
+            </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white">
+                <DropdownMenuLabel onClick={handleSignOut} className="cursor-pointer">Logout</DropdownMenuLabel>
+            </DropdownMenuContent>
+          </DropdownMenu>        
+        ):(
         <Link href="/login">
           <ButtonPink paddingY="1px" paddingX="2em">
             <span className="text-xs">Login</span>
           </ButtonPink>
         </Link>
+        )}
       </div>
     </nav>
   );
