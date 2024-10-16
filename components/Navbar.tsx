@@ -132,7 +132,7 @@ export default function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gray-500 text-white font-semibold flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 bg-[#E24848] text-white font-semibold flex items-center justify-center rounded-full">
                 {getInitials(user)}
               </div>
             </div>

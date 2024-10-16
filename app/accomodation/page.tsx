@@ -118,7 +118,7 @@ export default function () {
               <p>{payment.semester}</p>
               <p>{payment.anual}</p>
               <div>
-                <Link href="/payment"><Button style={{background:payment.buttonColor}} className="text-white text-sm font-semibold rounded-full mt-5 px-[7em] py-[2em] hover:bg-teal-700">Learn More</Button></Link>
+                <Link href="/payment"><Button style={{background:payment.buttonColor}} className="text-white text-sm font-semibold rounded-full mt-5 px-[7em] py-[2em] hover:bg-teal-700">Proceed to Pay</Button></Link>
               </div>
             </div>
           ))}
