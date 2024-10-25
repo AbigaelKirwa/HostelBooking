@@ -30,7 +30,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("Auth state changed. Current user:", currentUser);
+      // console.log("Auth state changed. Current user:", currentUser);
       if (currentUser) {
         setUser(currentUser);
       } else {
@@ -44,7 +44,7 @@ export default function Navbar() {
       if (user) {
         // Update the user state immediately after login
         setUser(user);
-        console.log("user details updated", user)
+        // console.log("user details updated", user)
       }
     });
   
