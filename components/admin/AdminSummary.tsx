@@ -49,7 +49,7 @@ export default function(){
                                 <span className="text-[#797D8C] text-sm font-semibold">{summary.genre}</span><br/>
                                 <span className="text-[#04103B] text-3xl font-semibold">{summary.number}</span>
                             </div>
-                            <div className="font-semibold text-2xl">
+                            <div className="font-semibold text-xl">
                                 <summary.icon />
                             </div>
                         </div>

@@ -2,8 +2,12 @@
 import Link from "next/link"
 import { useState } from "react"
 
-export default function(){
-    const [activeIndex, setActiveIndex] = useState(0)
+type Props ={
+    activeIndex:number, 
+    setActiveIndex:(index:number)=>void
+}
+
+export default function({activeIndex, setActiveIndex}:Props){
 
     const handleClick=(index:number)=>{
         setActiveIndex(index)
