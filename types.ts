@@ -12,4 +12,10 @@ export interface Accommodations {
     name: string;
     text_color: string;
   }
+
+export interface Users{
+  id:string;
+  fullname:string;
+  email:string;
+}
   

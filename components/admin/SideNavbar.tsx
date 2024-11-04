@@ -1,16 +1,14 @@
 'use client'
-import Link from "next/link"
+
 import { useState } from "react"
 
-type Props ={
-    activeIndex:number, 
-    setActiveIndex:(index:number)=>void
-}
+export default function(){
+    const [highlight, setHighlight] = useState<string>("dashboard")
 
-export default function({activeIndex, setActiveIndex}:Props){
-
-    const handleClick=(index:number)=>{
-        setActiveIndex(index)
+    const handleNavigation = (item:string)=>{
+        //directly set window location
+        window.location.hash = item;
+        setHighlight(item)
     }
 
     return(
@@ -18,19 +16,17 @@ export default function({activeIndex, setActiveIndex}:Props){
             <ul className="flex flex-col gap-16 w-full pl-10">
                 {['dashboard', 'hostels', 'payments', 'users'].map((item, index)=>(
                 <div>
-                    <Link href={`${index == 0 ? '/admin/': `/admin/${item}`} `}>
-                        <li 
-                        key={index} 
-                        onClick={()=>handleClick(index)}
-                        className={`w-full cursor-pointer p-3 pl-6 rounded-l-3xl transition-colors duration-200 ${
-                            activeIndex === index 
-                            ? 'bg-white text-gray-800'
-                            : 'hover:bg-gray-600 hover:text-white'
-                        }`}
-                        >
-                            {item}
-                        </li>
-                    </Link>
+                    <li 
+                    key={index} 
+                    onClick={()=>handleNavigation(item)}
+                    className={`w-full cursor-pointer p-3 pl-6 rounded-l-3xl transition-colors duration-200 ${
+                        highlight === item 
+                        ? 'bg-white text-gray-800'
+                        : 'hover:bg-gray-600 hover:text-white'
+                    }`}
+                    >
+                        {item}
+                    </li>
                 </div>
                 ))}
             </ul>
