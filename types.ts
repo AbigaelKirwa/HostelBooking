@@ -11,6 +11,19 @@ export interface Accommodations {
     location: string;
     name: string;
     text_color: string;
+    accomodationData:AccomodationDetail[];
+  }
+
+  export interface AccomodationDetail{
+    id:string,
+    exterior_picture:string,
+    interior_picture:string,
+    paragraph_one:string,
+    paragraph_two:string,
+    one_bedroom:number,
+    two_bedroom:number,
+    three_bedroom:number,
+    four_bedroom:number
   }
 
 export interface Users{

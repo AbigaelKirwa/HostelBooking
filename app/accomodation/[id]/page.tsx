@@ -4,10 +4,12 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import Link from "next/link";
-import Exterior from "@/components/images/exterior.png";
 import Interior from "@/components/images/interior.png";
 import ButtonPink from "@/components/Button";
 import { Button } from "@/components/ui/button";
+import { fetchAccomodations } from "@/app/accomodations/action";
+import { useEffect, useState } from "react";
+import { Accommodations } from "@/types";
 
 const payments = [
   {
@@ -53,76 +55,72 @@ const payments = [
 ];
 
 export default function () {
+  const [accomodation, setAccomodation] = useState<Accommodations[]>([]);
+    useEffect (()=>{
+        const getAccomodations = async () =>{
+            const data:any = await fetchAccomodations();
+            setAccomodation(data);
+        };
+        getAccomodations();
+    },[])
+
+    const path = window.location.pathname
+    const accomodationId = path.split('/').pop()
+    console.log(accomodationId)
+
   return (
     <div>
       <Navbar />
       <div>
-        <div className="px-20 py-10 flex justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
-          <div
-            id="image"
-            className="w-1/2 max-md:w-full max-md:flex max-md:justify-center max-md:items-center"
-          >
-            <Image src={Exterior} alt="confused" className="w-[90%]" />
-          </div>
-          <div
-            id="words"
-            className="w-1/2 flex flex-col justify-center items-center px-10 text-justify gap-10 max-md:w-full max-md:flex max-md:justify-center max-md:items-center max-md:gap-5 max-md:px-9 max-sm:px-5"
-          >
-            <p className="text-sm leading-loose text-[#302F2F]">
-              The Hostels provide a comfortable, secure, and student-focused
-              living experience. With spacious, fully furnished rooms, 24/7
-              security, and high-speed internet, students can enjoy a balanced
-              environment for both study and relaxation.
-            </p>
-            <div className="flex justify-start w-full">
-              <Link href="#payment_plans">
-                <ButtonPink paddingX="4em" paddingY="2em">
-                  View Payment Plans
-                </ButtonPink>
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div className="px-10  flex flex-row-reverse justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
-          <div
-            id="image"
-            className="w-1/2 max-md:w-full max-md:flex max-md:justify-center max-md:items-center"
-          >
-            <Image src={Interior} alt="confused" className="w-[90%]" />
-          </div>
-          <div
-            id="words"
-            className="w-1/2 flex flex-col justify-center items-center px-14 text-justify gap-10 max-md:w-full max-md:flex max-md:gap-5 max-md:px-9 max-sm:px-5"
-          >
-            <p className="text-sm leading-loose text-[#302F2F]">
-              The Hostels offer students spacious, well-ventilated rooms
-              designed for comfort and practicality. Each room is fully
-              furnished with a comfortable bed, study desk, and ample storage
-              space, creating an environment where students can feel at home
-              while focusing on their studies. The natural lighting and modern
-              decor add to the welcoming ambiance, making it an ideal place for
-              rest and productivity.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div id="payment_plans" className="py-10">
-        <h2 className="font-bold text-center text-6xl my-10 text-[#1E1846] max-lg:text-5xl max-md:text-4xl max-md:px-10">
-          Our Payment Plans
-        </h2>
-        <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10">
-          {payments.map((payment) => (
-            <div key={payment.id} className="flex flex-col gap-y-3 px-10 py-10 rounded-3xl text-sm" style={{background: payment.background, boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.2)", color:payment.textColor}}>
-              <h2 className="font-bold text-3xl mb-5">{payment.bedroom_number}</h2>
-              <p>{payment.month}</p>
-              <p>{payment.semester}</p>
-              <p>{payment.anual}</p>
-              <div>
-                <Link href="/payment"><Button style={{background:payment.buttonColor}} className="text-white text-sm font-semibold rounded-full mt-5 px-[7em] py-[2em] hover:bg-teal-700">Proceed to Pay</Button></Link>
+        {accomodation.map((accomodation_detail)=>(
+          accomodation_detail.accomodationData.map((specific_accomodation)=>(
+          accomodationId === specific_accomodation.id ? (
+          <>
+            <div className="px-20 py-10 flex justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
+              <div id="image" className="w-1/2 max-md:w-full max-md:flex max-md:justify-center max-md:items-center">
+                <img src={specific_accomodation.exterior_picture} alt="confused" className="w-[90%]" />
+              </div>
+              <div id="words" className="w-1/2 flex flex-col justify-center items-center px-10 text-justify gap-10 max-md:w-full max-md:flex max-md:justify-center max-md:items-center max-md:gap-5 max-md:px-9 max-sm:px-5">
+                <p className="text-sm leading-loose text-[#302F2F]">{specific_accomodation.paragraph_one}</p>
+                <div className="flex justify-start w-full">
+                  <Link href="#payment_plans">
+                    <ButtonPink paddingX="4em" paddingY="2em">
+                      View Payment Plans
+                    </ButtonPink>
+                  </Link>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
+            <div className="px-10  flex flex-row-reverse justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
+              <div id="image" className="w-1/2 max-md:w-full max-md:flex max-md:justify-center max-md:items-center">
+                <img src={specific_accomodation.interior_picture} alt="interior" className="w-[90%]" />
+              </div>
+              <div id="words" className="w-1/2 flex flex-col justify-center items-center px-14 text-justify gap-10 max-md:w-full max-md:flex max-md:gap-5 max-md:px-9 max-sm:px-5">
+                <p className="text-sm leading-loose text-[#302F2F]">{specific_accomodation.paragraph_two}</p>
+              </div>
+            </div>
+            <div id="payment_plans" className="py-10">
+              <h2 className="font-bold text-center text-6xl my-10 text-[#1E1846] max-lg:text-5xl max-md:text-4xl max-md:px-10">
+                Our Payment Plans
+              </h2>
+              <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10">
+                  {[specific_accomodation.four_bedroom, specific_accomodation.three_bedroom, specific_accomodation.two_bedroom, specific_accomodation.one_bedroom].map((bedroom, index)=>(
+                    <div className="flex flex-col gap-y-3 px-10 py-10 rounded-3xl text-sm text-center" style={{background: "#D9D9D9", boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.2)", color:"black"}}>
+                    <h2 className="font-bold text-3xl mb-5">{index +1} Bedroom</h2>
+                    <p>Monthly Plan: Ksh.{bedroom}</p>
+                    <p>Semester Plan: (4 months): Ksh.{bedroom * 4}</p>
+                    <p>Annual Plan: (12 months): Ksh.{bedroom * 12}</p>
+                    <div>
+                      <Link href="/payment"><Button style={{background:"#264A5A"}} className="text-white text-sm font-semibold rounded-full mt-5 px-[7em] py-[2em] hover:bg-teal-700">Proceed to Pay</Button></Link>
+                    </div>
+                  </div>
+                  ))}
+              </div>
+            </div>
+          </>
+        ):null
+        ))
+        ))}
       </div>
       <Footer/>
     </div>

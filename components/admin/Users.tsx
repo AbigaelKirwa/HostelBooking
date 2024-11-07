@@ -17,7 +17,7 @@ export default function(){
             if (data) setUsers(data)
         }
         getUsers();
-    })
+    }, [])
 
     // Calculate the users to display for the current page
     const indexOfLastUser = currentPage * pageSize;
