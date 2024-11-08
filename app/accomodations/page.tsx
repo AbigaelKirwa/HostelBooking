@@ -2,10 +2,8 @@
 
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import AccomodationImage from "@/components/images/accomodation_main.png"
 import { useState, useEffect } from "react"
 import { fetchAccomodations } from "./action"
 import { Accommodations } from "@/types"
@@ -25,9 +23,6 @@ export default function(){
         <div>
             <Navbar/>
             <div>
-                <div id="AccomodationImage" className="w-full">
-                    <Image src={AccomodationImage} alt="main accomodation" className="w-full h-[90vh] max-md:h-[60vh]"/>
-                </div>
                 {accomodations.length === 0 ?(
                     <p>No Accomodations available</p>
                 ):

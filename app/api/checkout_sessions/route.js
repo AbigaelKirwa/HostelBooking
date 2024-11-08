@@ -1,10 +1,13 @@
 // route.js
 import Stripe from 'stripe';
+import { db } from '@/lib/firebase';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { amount } = await req.json();
+    const {amount, userId, userName, accomodationId, accomodationName} = await req.json();
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -24,6 +27,17 @@ export async function POST(req) {
       success_url: `${process.env.NEXT_PUBLIC_URL}/success`,
       cancel_url: `${process.env.NEXT_PUBLIC_URL}/cancel`,
     });
+
+    //add payment data to firestore
+    await addDoc(collection(db, "payments"),{
+      paymentId: session.id,
+      userId: userId, 
+      userName:userName,
+      accomodationId:accomodationId,
+      accomodationName:accomodationName,
+      amount:amount, 
+      createdAt: serverTimestamp()
+    })
 
     return new Response(JSON.stringify({ sessionId: session.id }), {
       status: 200,

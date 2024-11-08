@@ -4,11 +4,11 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import ButtonPink from "@/components/Button";
-import { Button } from "@/components/ui/button";
 import { fetchAccomodations } from "@/app/accomodations/action";
 import { useEffect, useState } from "react";
 import { Accommodations } from "@/types";
 import { loadStripe } from "@stripe/stripe-js";
+import {useAuth} from "@/hooks/useAuth"
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined){
   throw Error
@@ -19,6 +19,10 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 export default function () {
   const [accomodation, setAccomodation] = useState<Accommodations[]>([]);
   const [accomodationId, setAccomodationId] = useState<string | null>(null);
+  const user = useAuth();
+  const userId = user ? user.uid : null; // Access userId only if user exists
+  const userName = user ? user.fullname : null; // Access userName only if user exists
+
     useEffect (()=>{
         const getAccomodations = async () =>{
             const data:any = await fetchAccomodations();
@@ -27,19 +31,20 @@ export default function () {
         getAccomodations();
 
         // Safely access window object on client side
-    if (typeof window !== "undefined") {
-      const path = window.location.pathname;
-      const id = path.split("/").pop();
-      setAccomodationId(id || null);
-    }
+        if (typeof window !== "undefined") {
+          const path = window.location.pathname;
+          const id = path.split("/").pop();
+          setAccomodationId(id || userId);
+        }
     },[])
 
-    const handlePayment = async(amount:number)=>{
+    const handlePayment = async(amount:number, accomodationId:string, accomodationName:string)=>{
       try{
+        console.log({ amount, userId, userName, accomodationId, accomodationName });
         const response = await fetch('/api/checkout_sessions',{
           method:'POST',
           headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({amount})
+          body: JSON.stringify({amount, userId, userName, accomodationId, accomodationName})
         })
         // Check if the response is ok
         if (!response.ok) {
@@ -108,26 +113,23 @@ export default function () {
                     <p>Monthly Plan: Ksh.{bedroom}</p>
                     <p>Semester Plan: (4 months): Ksh.{bedroom * 4}</p>
                     <p>Annual Plan: (12 months): Ksh.{bedroom * 12}</p>
-                    {/* <div>
-                      <Link href="/payment"><Button style={{background:"#264A5A"}} className="text-white text-sm font-semibold rounded-full mt-5 px-[7em] py-[2em] hover:bg-teal-700">Proceed to Pay</Button></Link>
-                    </div> */}
                     <div className="flex justify-center gap-5">
                           <button
-                            onClick={() => handlePayment(bedroom)} // Monthly payment
+                            onClick={() => handlePayment(bedroom, accomodation_detail.id, accomodation_detail.name)} // Monthly payment
                             className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
                             style={{ background: "#264A5A" }}
                           >
                             Pay Monthly
                           </button>
                           <button
-                            onClick={() => handlePayment(bedroom * 4)} // Semester payment
+                            onClick={() => handlePayment(bedroom * 4, accomodation_detail.id, accomodation_detail.name)} // Semester payment
                             className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
                             style={{ background: "#264A5A" }}
                           >
                             Pay Semester
                           </button>
                           <button
-                            onClick={() => handlePayment(bedroom * 12)} // Annual payment
+                            onClick={() => handlePayment(bedroom * 12, accomodation_detail.id, accomodation_detail.name)} // Annual payment
                             className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
                             style={{ background: "#264A5A" }}
                           >
