@@ -2,81 +2,79 @@
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
 import Link from "next/link";
-import Interior from "@/components/images/interior.png";
 import ButtonPink from "@/components/Button";
 import { Button } from "@/components/ui/button";
 import { fetchAccomodations } from "@/app/accomodations/action";
 import { useEffect, useState } from "react";
 import { Accommodations } from "@/types";
+import { loadStripe } from "@stripe/stripe-js";
 
-const payments = [
-  {
-    id: 1,
-    bedroom_number: "1-Bedroom",
-    month: "Monthly Plan: KES 25,000",
-    semester: "Semester Plan (4 months): KES 96,000 (save KES 4,000)",
-    anual: "Annual Plan (12 months): KES 285,000 (save KES 15,000)",
-    textColor: "black",
-    background: "#D9D9D9",
-    buttonColor: "#264A5A",
-  },
-  {
-    id: 2,
-    bedroom_number: "2-Bedroom",
-    month: "Monthly Plan: KES 20,000",
-    semester: "Semester Plan (4 months): KES 76,000 (save KES 4,000)",
-    anual: "Annual Plan (12 months): KES 225,000 (save KES 15,000)",
-    textColor: "black",
-    background: "#D9D9D9",
-    buttonColor: "#E24848",
-  },
-  {
-    id: 3,
-    bedroom_number: "3-Bedroom",
-    month: "Monthly Plan: KES 18,000",
-    semester: "Semester Plan (4 months): KES 68,000 (save KES 4,000)",
-    anual: "Annual Plan (12 months): KES 200,000 (save KES 16,000)",
-    textColor: "white",
-    background: "#264A5A",
-    buttonColor: "#E24848",
-  },
-  {
-    id: 4,
-    bedroom_number: "1-Bedroom",
-    month: "Monthly Plan: KES 15,000",
-    semester: "Semester Plan (4 months): KES 56,000 (save KES 4,000)",
-    anual: "Annual Plan (12 months): KES 165,000 (save KES 15,000)",
-    textColor: "black",
-    background: "#D9D9D9",
-    buttonColor: "#264A5A",
-  },
-];
+if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined){
+  throw Error
+}
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function () {
   const [accomodation, setAccomodation] = useState<Accommodations[]>([]);
+  const [accomodationId, setAccomodationId] = useState<string | null>(null);
     useEffect (()=>{
         const getAccomodations = async () =>{
             const data:any = await fetchAccomodations();
             setAccomodation(data);
         };
         getAccomodations();
+
+        // Safely access window object on client side
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname;
+      const id = path.split("/").pop();
+      setAccomodationId(id || null);
+    }
     },[])
 
-    const path = window.location.pathname
-    const accomodationId = path.split('/').pop()
-    console.log(accomodationId)
+    const handlePayment = async(amount:number)=>{
+      try{
+        const response = await fetch('/api/checkout_sessions',{
+          method:'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({amount})
+        })
+        // Check if the response is ok
+        if (!response.ok) {
+          throw new Error(`Failed to create checkout session: ${response.statusText}`);
+        }
+  
+        const {sessionId} = await response.json()
+        const stripe = await stripePromise;
+  
+        if(stripe){
+          //redirect to stripe checkout
+          const {error} = await stripe.redirectToCheckout({ sessionId });
+          if (error) {
+            console.log("Error redirecting to checkout", error)
+          }
+        }
+        else{
+          console.error("Stripe failed to initialize")
+        }
+      }
+      catch(error){
+        console.error('Error occurred during payment handling:', error);
+      }
+      
+    }
 
   return (
     <div>
       <Navbar />
       <div>
         {accomodation.map((accomodation_detail)=>(
-          accomodation_detail.accomodationData.map((specific_accomodation)=>(
+          accomodation_detail.accomodationData.map((specific_accomodation, index)=>(
           accomodationId === specific_accomodation.id ? (
           <>
-            <div className="px-20 py-10 flex justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
+            <div key={index} className="px-20 py-10 flex justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
               <div id="image" className="w-1/2 max-md:w-full max-md:flex max-md:justify-center max-md:items-center">
                 <img src={specific_accomodation.exterior_picture} alt="confused" className="w-[90%]" />
               </div>
@@ -105,14 +103,37 @@ export default function () {
               </h2>
               <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10">
                   {[specific_accomodation.four_bedroom, specific_accomodation.three_bedroom, specific_accomodation.two_bedroom, specific_accomodation.one_bedroom].map((bedroom, index)=>(
-                    <div className="flex flex-col gap-y-3 px-10 py-10 rounded-3xl text-sm text-center" style={{background: "#D9D9D9", boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.2)", color:"black"}}>
+                    <div key={index} className="flex flex-col gap-y-3 px-10 py-10 rounded-3xl text-sm text-center" style={{background: "#D9D9D9", boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.2)", color:"black"}}>
                     <h2 className="font-bold text-3xl mb-5">{index +1} Bedroom</h2>
                     <p>Monthly Plan: Ksh.{bedroom}</p>
                     <p>Semester Plan: (4 months): Ksh.{bedroom * 4}</p>
                     <p>Annual Plan: (12 months): Ksh.{bedroom * 12}</p>
-                    <div>
+                    {/* <div>
                       <Link href="/payment"><Button style={{background:"#264A5A"}} className="text-white text-sm font-semibold rounded-full mt-5 px-[7em] py-[2em] hover:bg-teal-700">Proceed to Pay</Button></Link>
-                    </div>
+                    </div> */}
+                    <div className="flex justify-center gap-5">
+                          <button
+                            onClick={() => handlePayment(bedroom)} // Monthly payment
+                            className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
+                            style={{ background: "#264A5A" }}
+                          >
+                            Pay Monthly
+                          </button>
+                          <button
+                            onClick={() => handlePayment(bedroom * 4)} // Semester payment
+                            className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
+                            style={{ background: "#264A5A" }}
+                          >
+                            Pay Semester
+                          </button>
+                          <button
+                            onClick={() => handlePayment(bedroom * 12)} // Annual payment
+                            className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
+                            style={{ background: "#264A5A" }}
+                          >
+                            Pay Annual
+                          </button>
+                        </div>
                   </div>
                   ))}
               </div>
