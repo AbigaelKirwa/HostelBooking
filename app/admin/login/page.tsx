@@ -10,13 +10,11 @@ import { auth } from "@/lib/firebase";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useRouter } from 'next/compat/router'
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { toast } = useToast();
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,7 +42,7 @@ export default function Login() {
                         description: 'Logged in successfully',
                         variant: "default",
                     });
-                    router?.push('/admin/');
+                    window.location.replace('/admin');
                 } 
                 else {
                     // If not an admin, sign out

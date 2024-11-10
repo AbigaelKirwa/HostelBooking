@@ -42,14 +42,26 @@ export default function(){
         <div id="users" className="mt-5">
             <h2 className="text-sm text-[#04103B] font-bold">Users</h2>
             <div id="display_data" className="mt-5">
-                {currentUsers.map((user, index)=>(
-                    <div id="row" key={index} className="border-[1.5px] border-[#EBE8FF] rounded-xl p-3 my-3 flex justify-center text-xs gap-32">
-                    <p id="name" className="font-semibold text-[#797D8C]">{user.fullname}</p>
-                    <p id="email" className="text-[#04103B] font-bold">{user.email}</p>
-                    <p id="identification" className="font-semibold text-[#797D8C]">{user.id}</p>
-                </div>
-                ))}
+                <table className="w-full border-[1.5px] border-[#EBE8FF] rounded-xl text-xs">
+                    <thead className="bg-[#F3F4F6]">
+                        <tr className="text-[#797D8C] font-semibold">
+                            <th className="p-3">Name</th>
+                            <th className="p-3">Email</th>
+                            <th className="p-3">Identification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentUsers.map((user, index) => (
+                            <tr key={index} className="border-b-[1.5px] border-[#EBE8FF] text-center">
+                                <td className="p-3 font-semibold text-[#797D8C]">{user.fullname}</td>
+                                <td className="p-3 text-[#04103B] font-bold">{user.email}</td>
+                                <td className="p-3 font-semibold text-[#797D8C]">{user.id}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
+
             {/* Pagination Controls */}
             <div className="pagination-controls mt-4 flex justify-center gap-4">
                 <button

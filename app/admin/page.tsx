@@ -5,35 +5,43 @@ import { useEffect, useState } from "react"
 import Dashboard from "@/components/admin/Dashboard"
 import Users from "@/components/admin/Users"
 import { onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { auth } from "@/lib/firebase"
-import { useRouter } from 'next/router';
+import Navbar from "@/components/Navbar"
+import Payment from "@/components/admin/Payment"
 
 
 export default function(){
     const [displayContent, setDisplayContent] = useState<any>(<Dashboard />); // Set initial content to Dashboard
     const [isAdmin, setIsAdmin] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const router = useRouter();
 
     useEffect(() => {
-        if (!router) return; // Ensure router is defined
         //check if user is an admin
         const checkAdmin = async ()=>{
             const unsubscribe = onAuthStateChanged(auth, async(user)=>{
                 if(user){
                     const db = getFirestore()
-                    const userDocRef = doc(db, 'users', user.uid)
-                    const userDoc = await getDoc(userDocRef)
-                    if (userDoc.exists() && userDoc.data().isAdmin){
-                        setIsAdmin(true)
+                    const usersCollection= collection(db, 'users')
+                    const q = query(usersCollection, where ('uid', '==', user.uid))
+                    const querySnapshot = await getDocs(q);
+
+
+                    if(!querySnapshot.empty){
+                        const userDoc = querySnapshot.docs[0];
+                        if(userDoc.exists() && userDoc.data().isAdmin){
+                            setIsAdmin(true)
+                        }
+                        else{
+                            window.location.replace('/admin/login')
+                        }
                     }
                     else{
-                        router.replace('/admin/login')
+                        window.location.replace('/admin/login')
                     }
                 }
                 else{
-                    router.replace('/admin/login')
+                    window.location.replace('/admin/login')
                 }
                 setIsLoading(false)
             })
@@ -46,7 +54,11 @@ export default function(){
             console.log("Current hash:", hash); // Check the current hash
             if(hash === "users"){
                 setDisplayContent(<Users />)
-            } else {
+            }
+            else if(hash === "payments"){
+                setDisplayContent(<Payment />)
+            }
+            else {
                 setDisplayContent(<Dashboard />)
             } 
         };

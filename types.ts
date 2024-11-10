@@ -31,4 +31,14 @@ export interface Users{
   fullname:string;
   email:string;
 }
+
+export interface Payments{
+  paymentId:string,
+  accomodationId:string,
+  userId:string,
+  accomodationName:string,
+  userName:string,
+  amount:number,
+  createdAt:string,
+}
   
