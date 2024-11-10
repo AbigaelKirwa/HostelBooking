@@ -4,49 +4,17 @@ import AdminSummary from "@/components/admin/AdminSummary"
 import { useEffect, useState } from "react"
 import Dashboard from "@/components/admin/Dashboard"
 import Users from "@/components/admin/Users"
-import { onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import { auth } from "@/lib/firebase"
 import Navbar from "@/components/Navbar"
 import Payment from "@/components/admin/Payment"
+import { confirmAdmin } from "@/hooks/confirmAdmin"
 
 
 export default function(){
     const [displayContent, setDisplayContent] = useState<any>(<Dashboard />); // Set initial content to Dashboard
-    const [isAdmin, setIsAdmin] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const {isAdmin, isLoading} = confirmAdmin();
 
     useEffect(() => {
-        //check if user is an admin
-        const checkAdmin = async ()=>{
-            const unsubscribe = onAuthStateChanged(auth, async(user)=>{
-                if(user){
-                    const db = getFirestore()
-                    const usersCollection= collection(db, 'users')
-                    const q = query(usersCollection, where ('uid', '==', user.uid))
-                    const querySnapshot = await getDocs(q);
-
-
-                    if(!querySnapshot.empty){
-                        const userDoc = querySnapshot.docs[0];
-                        if(userDoc.exists() && userDoc.data().isAdmin){
-                            setIsAdmin(true)
-                        }
-                        else{
-                            window.location.replace('/admin/login')
-                        }
-                    }
-                    else{
-                        window.location.replace('/admin/login')
-                    }
-                }
-                else{
-                    window.location.replace('/admin/login')
-                }
-                setIsLoading(false)
-            })
-            return unsubscribe;
-        };
+        
 
         const handleHashChange = () => {
             const hash = window.location.hash.substring(1);
@@ -67,7 +35,6 @@ export default function(){
         handleHashChange();
         window.addEventListener('hashchange', handleHashChange);
 
-        checkAdmin();
 
         // Cleanup event listener on unmount
         return () => {
@@ -75,6 +42,8 @@ export default function(){
         };
 
     }, []); // Only need to run this effect once
+
+    confirmAdmin()
 
     if (isLoading) {
         return <p>Loading...</p>; // Display loading message while checking admin status
