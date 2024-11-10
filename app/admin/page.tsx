@@ -7,6 +7,7 @@ import Users from "@/components/admin/Users"
 import Navbar from "@/components/Navbar"
 import Payment from "@/components/admin/Payment"
 import { confirmAdmin } from "@/hooks/confirmAdmin"
+import AccomodationsRead from "@/components/admin/AccomodationsRead"
 
 
 export default function(){
@@ -25,6 +26,9 @@ export default function(){
             }
             else if(hash === "payments"){
                 setDisplayContent(<Payment />)
+            }
+            else if(hash === "hostels"){
+                setDisplayContent(<AccomodationsRead/>)
             }
             else {
                 setDisplayContent(<Dashboard />)
