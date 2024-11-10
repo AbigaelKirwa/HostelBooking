@@ -9,7 +9,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 export default function(){
     const [accomodations, setAccomodations] = useState<Accommodations[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
-    const pageSize = 6; // Number of users per page
+    const pageSize = 3; // Number of users per page
 
     useEffect(()=>{
         const getAccomodations= async () =>{
@@ -62,7 +62,7 @@ export default function(){
                         {currentAccomodations.map((hostel, index) => (
                             <tr key={index} className="border-b-[1.5px] border-[#EBE8FF] text-center">
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    {hostel.id.length > 12 ? `${hostel.id.substring(0, 12)}...` : hostel.id}
+                                    {hostel.id.length > 8 ? `${hostel.id.substring(0, 8)}...` : hostel.id}
                                 </td>
                                 <td className="p-3 text-[#04103B] font-bold">
                                     {hostel.name}
@@ -76,7 +76,7 @@ export default function(){
                                 {hostel.accomodationData.map((specific_detail)=>(
                                     <>
                                         <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.id}
+                                            {specific_detail.id.length > 8 ? `${specific_detail.id.substring(0, 8)}...` : specific_detail.id}
                                         </td>
                                         <td className="p-3 font-semibold text-[#797D8C]">
                                             {specific_detail.interior_picture}
@@ -95,9 +95,9 @@ export default function(){
                                         </td>
                                     </>
                                 ))}
-                                <td className="gap-3">
-                                    <button>Update</button>
-                                    <button>Delete</button>
+                                <td>
+                                    <button className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
+                                    <button className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
                         ))}
