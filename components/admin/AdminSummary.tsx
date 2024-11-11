@@ -5,13 +5,37 @@ import { FaArrowTrendUp } from "react-icons/fa6";
 import { FaArrowTrendDown } from "react-icons/fa6";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { FaRegUser } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function(){
+    const [counts, setCounts] = useState({
+        hostels: 0,
+        payments: 0,
+        users: 0
+    });
+
+    // Fetch data from Firebase
+    useEffect(() => {
+        const fetchCounts = async () => {
+            const hostelsSnapshot = await getDocs(collection(db, "accomodations"));
+            const paymentsSnapshot = await getDocs(collection(db, "payments"));
+            const usersSnapshot = await getDocs(collection(db, "users"));
+
+            setCounts({
+                hostels: hostelsSnapshot.size,
+                payments: paymentsSnapshot.size,
+                users: usersSnapshot.size
+            });
+        };
+        fetchCounts();
+    }, []);
     const summaries=[
         {
             id:1,
             genre:"Hostels",
-            number:100,
+            number:counts.hostels,
             icon: MdOutlineShoppingCart,
             arrow: FaArrowTrendUp,
             circleColor:"#B5FFCE",
@@ -21,7 +45,7 @@ export default function(){
         {
             id:2,
             genre:"Payments",
-            number:200,
+            number:counts.payments,
             icon: BsGraphUpArrow,
             arrow: FaArrowTrendDown,
             circleColor:"#FFD9D7",
@@ -31,7 +55,7 @@ export default function(){
         {
             id:3,
             genre:"Users",
-            number:120,
+            number:counts.users,
             icon: FaRegUser,
             arrow: FaArrowTrendUp,
             circleColor:"#B5FFCE",
