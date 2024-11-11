@@ -33,6 +33,7 @@ export default function Login() {
             // Clear the input fields after successful login
             setEmail('');
             setPassword('');
+            window.location.replace('/accomodations')
         } catch (error: any) {
             console.log("Login error:", error);
             toast({

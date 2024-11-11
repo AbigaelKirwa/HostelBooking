@@ -43,6 +43,7 @@ export default function Register(){
                 title:"Yipee! You're in!",
                 description:"Registration was successfull",
             })
+            window.location.replace('/login')
         }
         else{
             toast({
