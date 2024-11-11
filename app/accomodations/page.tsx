@@ -9,8 +9,8 @@ import { fetchAccomodations } from "./action"
 import { Accommodations } from "@/types"
 
 export default function(){
-
     const [accomodations, setAccomodations] = useState<Accommodations[]>([]);
+    
     useEffect (()=>{
         const getAccomodations = async () =>{
             const data:any = await fetchAccomodations();
@@ -41,9 +41,7 @@ export default function(){
                                         <p>Location: <b>{accomodation.location}</b></p>
                                     </div>
                                     <div className="w-full my-8">
-                                        {accomodation.accomodationData.map((specificAccomodation)=>(
-                                            <Link href={`/accomodation/${specificAccomodation.id}`}><Button style={{background:accomodation.button_color}} className="text-white text-sm font-semibold rounded-full w-full py-[1.5em] hover:bg-teal-700">Learn More</Button></Link>
-                                        ))}
+                                        <Link href={`/accomodation/${accomodation.id}`}><Button style={{background:accomodation.button_color}} className="text-white text-sm font-semibold rounded-full w-full py-[1.5em] hover:bg-teal-700">Learn More</Button></Link>
                                     </div>
                                 </div>
                             </div>

@@ -75,8 +75,7 @@ export default function () {
     <div>
       <Navbar />
       <div>
-        {accomodation.map((accomodation_detail)=>(
-          accomodation_detail.accomodationData.map((specific_accomodation, index)=>(
+        {accomodation.map((specific_accomodation, index)=>(
           accomodationId === specific_accomodation.id ? (
           <>
             <div key={index} className="px-20 py-10 flex justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
@@ -115,21 +114,21 @@ export default function () {
                     <p>Annual Plan: (12 months): Ksh.{bedroom * 12}</p>
                     <div className="flex justify-center gap-5">
                           <button
-                            onClick={() => handlePayment(bedroom, accomodation_detail.id, accomodation_detail.name)} // Monthly payment
+                            onClick={() => handlePayment(bedroom, specific_accomodation.id, specific_accomodation.name)} // Monthly payment
                             className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
                             style={{ background: "#264A5A" }}
                           >
                             Pay Monthly
                           </button>
                           <button
-                            onClick={() => handlePayment(bedroom * 4, accomodation_detail.id, accomodation_detail.name)} // Semester payment
+                            onClick={() => handlePayment(bedroom * 4, specific_accomodation.id, specific_accomodation.name)} // Semester payment
                             className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
                             style={{ background: "#264A5A" }}
                           >
                             Pay Semester
                           </button>
                           <button
-                            onClick={() => handlePayment(bedroom * 12, accomodation_detail.id, accomodation_detail.name)} // Annual payment
+                            onClick={() => handlePayment(bedroom * 12, specific_accomodation.id, specific_accomodation.name)} // Annual payment
                             className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
                             style={{ background: "#264A5A" }}
                           >
@@ -142,7 +141,6 @@ export default function () {
             </div>
           </>
         ):null
-        ))
         ))}
       </div>
       <Footer/>

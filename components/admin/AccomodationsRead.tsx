@@ -5,12 +5,14 @@ import { Accommodations } from "@/types"
 import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
+import AccomodationsCreate from "./AccomodationsCreate";
 
 export default function(){
     const [accomodations, setAccomodations] = useState<Accommodations[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
-    const pageSize = 3; // Number of users per page
-
+    const pageSize = 2; // Number of users per page
+    
     useEffect(()=>{
         const getAccomodations= async () =>{
             const data:any = await fetchAccomodations();
@@ -23,7 +25,7 @@ export default function(){
     const indexOfLastAccomodation= currentPage * pageSize;
     const indexOfFirstAccomodation = indexOfLastAccomodation - pageSize;
     const currentAccomodations = accomodations.slice(indexOfFirstAccomodation, indexOfLastAccomodation);
-    const totalPages = Math.ceil(currentAccomodations.length/pageSize)
+    const totalPages = Math.ceil(accomodations.length/pageSize)
 
     // Handler functions for pagination
     const nextPage = () => {
@@ -40,16 +42,19 @@ export default function(){
 
     return(
         <div id="users" className="mt-5">
-            <h2 className="text-sm text-[#04103B] font-bold">Accomodations</h2>
+            <div className="flex gap-5">
+                <h2 className="text-sm text-[#04103B] font-bold">Accomodations</h2>
+                <AccomodationsCreate/>
+            </div>
             <div id="display_data" className="mt-5">
                 <table className="w-full border-[1.5px] border-[#EBE8FF] rounded-xl text-xs">
                     <thead className="bg-[#F3F4F6]">
                         <tr className="text-[#797D8C] font-semibold">
-                            <th className="p-3">Accomodations ID</th>
+                            <th className="p-3">Accomodation ID</th>
                             <th className="p-3">Name</th>
+                            <th className="p-3">City</th>
                             <th className="p-3">Location</th>
                             <th className="p-3">Exterior Pic</th>
-                            <th className="p-3">Accommodation ID</th>
                             <th className="p-3">Interior Pic</th>
                             <th className="p-3">1-Bed</th>
                             <th className="p-3">2-Bed</th>
@@ -68,33 +73,29 @@ export default function(){
                                     {hostel.name}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
+                                    {hostel.city}
+                                </td>
+                                <td className="p-3 font-semibold text-[#797D8C]">
                                     {hostel.location}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    {hostel.exterior_picture}
+                                    <img className="w-40" src={hostel.exterior_picture} alt="" />
                                 </td>
-                                {hostel.accomodationData.map((specific_detail)=>(
-                                    <>
-                                        <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.id.length > 8 ? `${specific_detail.id.substring(0, 8)}...` : specific_detail.id}
-                                        </td>
-                                        <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.interior_picture}
-                                        </td>
-                                        <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.one_bedroom}
-                                        </td>
-                                        <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.two_bedroom}
-                                        </td>
-                                        <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.three_bedroom}
-                                        </td>
-                                        <td className="p-3 font-semibold text-[#797D8C]">
-                                            {specific_detail.four_bedroom}
-                                        </td>
-                                    </>
-                                ))}
+                                <td className="p-3 font-semibold text-[#797D8C]">
+                                    <img className="w-40" src={hostel.interior_picture} alt="" />
+                                </td>
+                                <td className="p-3 font-semibold text-[#797D8C]">
+                                    {hostel.one_bedroom}
+                                </td>
+                                <td className="p-3 font-semibold text-[#797D8C]">
+                                    {hostel.two_bedroom}
+                                </td>
+                                <td className="p-3 font-semibold text-[#797D8C]">
+                                    {hostel.three_bedroom}
+                                </td>
+                                <td className="p-3 font-semibold text-[#797D8C]">
+                                    {hostel.four_bedroom}
+                                </td>
                                 <td>
                                     <button className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
                                     <button className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>

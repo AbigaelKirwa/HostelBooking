@@ -31,31 +31,37 @@ export const fetchAccomodations = async ()=>{
 }
 
 // Unified function for creating documents in either the main collection or subcollection
-export const createDocument = async ({ parentId = null, data }: {parentId:null, data:Accommodations}) => {
+// Unified function for creating documents in the main collection only
+export const createAccommodation = async ({ parentId = null, data }: { parentId?: string | null, data: Accommodations }) => {
     try {
-        // Remove id from data if it exists to avoid overwriting
         const { id, ...dataWithoutId } = data;
 
+        // Main collection reference
         const collectionRef = parentId 
-            ? collection(db, "accommodations", parentId, "accommodation") 
-            : collection(db, "accommodations");
-        
-        const docRef = await addDoc(collectionRef, data);
+        ? collection(db, "accomodations", parentId, "accomodations")
+        : collection(db, "accomodations");
+
+
+        // Add main document (accommodation without `accommodationData`)
+        const docRef = await addDoc(collectionRef, dataWithoutId);
+
         return { id: docRef.id, ...dataWithoutId };
     } catch (error) {
-        console.error("Error creating document:", error);
+        console.error("Error creating accommodation:", error);
         return null;
     }
 };
 
+
+
 // Unified function for updating documents in either the main collection or subcollection
-export const updateDocument = async ({ parentId = null, id, data }:{parentId:string |null, id:string, data:Accommodations}) => {
+export const updateAccomodation = async ({ parentId = null, id, data }:{parentId:string |null, id:string, data:Accommodations}) => {
     try {
         // Remove id from data if it exists to avoid overwriting
         const { id: dataId, ...dataWithoutId } = data;
         const docRef = parentId 
-            ? doc(db, "accommodations", parentId, "accommodation", id) 
-            : doc(db, "accommodations", id);
+            ? doc(db, "accomodations", parentId, "accomodations", id) 
+            : doc(db, "accomodations", id);
 
         await updateDoc(docRef, dataWithoutId);
         return { id, ...dataWithoutId };
@@ -66,11 +72,11 @@ export const updateDocument = async ({ parentId = null, id, data }:{parentId:str
 };
 
 // Unified function for deleting documents from either the main collection or subcollection
-export const deleteDocument = async ({ parentId = null, id }:{parentId:string |null, id:string}) => {
+export const deleteAccomodation = async ({ parentId = null, id }:{parentId:string |null, id:string}) => {
     try {
         const docRef = parentId 
-            ? doc(db, "accommodations", parentId, "accommodation", id) 
-            : doc(db, "accommodations", id);
+            ? doc(db, "accomodations", parentId, "accomodation", id) 
+            : doc(db, "accomodations", id);
 
         await deleteDoc(docRef);
         return id;

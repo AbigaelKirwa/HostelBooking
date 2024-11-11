@@ -1,30 +1,21 @@
 export interface Accommodations {
-    id: string;
-    available: boolean;
-    background: string;
-    button_color: string;
-    city: string;
-    description_one: string;
-    description_two: string;
-    exterior_picture: string;
-    interior_picture: string;
-    location: string;
-    name: string;
-    text_color: string;
-    accomodationData:AccomodationDetail[];
-  }
-
-  export interface AccomodationDetail{
-    id:string,
-    exterior_picture:string,
-    interior_picture:string,
-    paragraph_one:string,
-    paragraph_two:string,
-    one_bedroom:number,
-    two_bedroom:number,
-    three_bedroom:number,
-    four_bedroom:number
-  }
+  id: string;
+  available: boolean;
+  background: string;
+  button_color: string;
+  city: string;
+  exterior_picture: string;
+  interior_picture: string;
+  location: string;
+  name: string;
+  text_color: string;
+  paragraph_one:string;
+  paragraph_two:string;
+  one_bedroom:number|null;
+  two_bedroom:number|null;
+  three_bedroom:number|null;
+  four_bedroom:number|null;
+}
 
 export interface Users{
   id:string;
