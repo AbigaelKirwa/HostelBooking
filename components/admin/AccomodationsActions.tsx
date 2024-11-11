@@ -30,7 +30,6 @@ export const fetchAccomodations = async ()=>{
     }
 }
 
-// Unified function for creating documents in either the main collection or subcollection
 // Unified function for creating documents in the main collection only
 export const createAccommodation = async ({ parentId = null, data }: { parentId?: string | null, data: Accommodations }) => {
     try {
@@ -52,17 +51,16 @@ export const createAccommodation = async ({ parentId = null, data }: { parentId?
     }
 };
 
-
-
-// Unified function for updating documents in either the main collection or subcollection
-export const updateAccomodation = async ({ parentId = null, id, data }:{parentId:string |null, id:string, data:Accommodations}) => {
+// Unified function for updating accommodation document
+export const updateAccomodation = async ({ id, data }: { id: string, data: Accommodations }) => {
     try {
         // Remove id from data if it exists to avoid overwriting
         const { id: dataId, ...dataWithoutId } = data;
-        const docRef = parentId 
-            ? doc(db, "accomodations", parentId, "accomodations", id) 
-            : doc(db, "accomodations", id);
 
+        // Directly reference the document using the id
+        const docRef = doc(db, "accomodations", id);
+
+        // Update the document
         await updateDoc(docRef, dataWithoutId);
         return { id, ...dataWithoutId };
     } catch (error) {

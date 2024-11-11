@@ -1,17 +1,20 @@
 'use client'
 
-import { fetchAccomodations } from "./AccomodationsActions"
+import { fetchAccomodations, updateAccomodation } from "./AccomodationsActions"
 import { Accommodations } from "@/types"
 import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
-import { IoIosAddCircle } from "react-icons/io";
 import AccomodationsCreate from "./AccomodationsCreate";
+import UpdateAccommodation from "./AccomodationsUpdate";
 
 export default function(){
     const [accomodations, setAccomodations] = useState<Accommodations[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
-    const pageSize = 2; // Number of users per page
+    const [newAccommodation, setNewAccommodation] = useState<Accommodations | null>(null);
+    const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodations | null>(null);
+
+    const pageSize = 3; // Number of users per page
     
     useEffect(()=>{
         const getAccomodations= async () =>{
@@ -38,6 +41,25 @@ export default function(){
         if (currentPage > 1) {
         setCurrentPage((prevPage) => prevPage - 1);
         }
+    };
+
+    const handleUpdateAccommodation = async (accommodationId: string) => {
+        if (!newAccommodation) return;
+
+        // Pass the accommodationId and newAccommodation data to update function
+        await updateAccomodation({ id: accommodationId, data: newAccommodation });
+        // Optionally close modal or reset form
+    };
+
+    //update accomodation
+    const handleOpenUpdateModal = (accommodation: Accommodations) => {
+        setSelectedAccommodation(accommodation);
+    };
+
+    const handleCloseUpdateModal = () => {
+        setSelectedAccommodation(null);
+        // Optionally, refresh data after update
+        // fetchAccomodations().then(setAccomodations);
     };
 
     return(
@@ -97,7 +119,7 @@ export default function(){
                                     {hostel.four_bedroom}
                                 </td>
                                 <td>
-                                    <button className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
+                                    <button onClick={()=>handleOpenUpdateModal(hostel)} className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
                                     <button className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
@@ -124,6 +146,13 @@ export default function(){
                 <FaArrowCircleRight />
                 </button>
             </div>
+            {selectedAccommodation && (
+                <UpdateAccommodation
+                    accommodationId={selectedAccommodation.id}
+                    currentData={selectedAccommodation}
+                    onClose={handleCloseUpdateModal}
+                />
+            )}
         </div>
     )
 }
