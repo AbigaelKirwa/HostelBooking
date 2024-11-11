@@ -70,11 +70,9 @@ export const updateAccomodation = async ({ id, data }: { id: string, data: Accom
 };
 
 // Unified function for deleting documents from either the main collection or subcollection
-export const deleteAccomodation = async ({ parentId = null, id }:{parentId:string |null, id:string}) => {
+export const deleteAccomodation = async (id:string) => {
     try {
-        const docRef = parentId 
-            ? doc(db, "accomodations", parentId, "accomodation", id) 
-            : doc(db, "accomodations", id);
+        const docRef = doc(db, "accomodations", id);
 
         await deleteDoc(docRef);
         return id;

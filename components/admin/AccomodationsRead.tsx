@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchAccomodations, updateAccomodation } from "./AccomodationsActions"
+import { deleteAccomodation, fetchAccomodations, updateAccomodation } from "./AccomodationsActions"
 import { Accommodations } from "@/types"
 import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
@@ -11,7 +11,6 @@ import UpdateAccommodation from "./AccomodationsUpdate";
 export default function(){
     const [accomodations, setAccomodations] = useState<Accommodations[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
-    const [newAccommodation, setNewAccommodation] = useState<Accommodations | null>(null);
     const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodations | null>(null);
 
     const pageSize = 3; // Number of users per page
@@ -21,7 +20,7 @@ export default function(){
             const data:any = await fetchAccomodations();
             if (data) setAccomodations(data)
         }
-        getAccomodations();
+        getAccomodations()
     }, [])
 
     // Calculate the users to display for the current page
@@ -43,14 +42,6 @@ export default function(){
         }
     };
 
-    const handleUpdateAccommodation = async (accommodationId: string) => {
-        if (!newAccommodation) return;
-
-        // Pass the accommodationId and newAccommodation data to update function
-        await updateAccomodation({ id: accommodationId, data: newAccommodation });
-        // Optionally close modal or reset form
-    };
-
     //update accomodation
     const handleOpenUpdateModal = (accommodation: Accommodations) => {
         setSelectedAccommodation(accommodation);
@@ -58,8 +49,14 @@ export default function(){
 
     const handleCloseUpdateModal = () => {
         setSelectedAccommodation(null);
-        // Optionally, refresh data after update
-        // fetchAccomodations().then(setAccomodations);
+    };
+
+    // Delete accommodation and refresh data
+    const handleDelete = async (id: string) => {
+        await deleteAccomodation(id);
+        setAccomodations((prevAccommodations) =>
+            prevAccommodations.filter(accommodation => accommodation.id !== id)
+        );
     };
 
     return(
@@ -120,7 +117,7 @@ export default function(){
                                 </td>
                                 <td>
                                     <button onClick={()=>handleOpenUpdateModal(hostel)} className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
-                                    <button className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
+                                    <button onClick={()=>{handleDelete(hostel.id)}} className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
                         ))}
