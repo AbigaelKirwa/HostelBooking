@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface Accommodations {
   id: string;
   available: boolean;
@@ -38,5 +40,19 @@ export interface Questions{
   value:string,
   query:string,
   answer:string
+}
+
+export interface Testimonials{
+  id:number,
+  image:StaticImageData,
+  name:string,
+  paragraph:string
+}
+
+export interface Counts{
+  id:number,
+  image:StaticImageData,
+  number:string,
+  name:string
 }
   

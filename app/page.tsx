@@ -12,6 +12,7 @@ import TestimonialOne from "@/components/images/testimonial1.png"
 import TestimonialTwo from "@/components/images/testimonial2.png"
 import TestimonialThree from "@/components/images/testimonial3.png"
 import Footer from "@/components/Footer";
+import { Counts, Testimonials } from "@/types";
 
 const counts=[
   {
@@ -45,7 +46,7 @@ const testimonials=[
     id:2,
     image:TestimonialTwo,
     name:'Jessica Too',
-    paragraph:'I’ve used this platform twice throughout my university life, and it has always exceeded my expectations. The hostels listed are well-maintained, and I felt confident knowing they were verified. The best part was the responsive customer service team, who helped me navigate the booking process.'
+    paragraph:'I have used this platform twice throughout my university life, and it has always exceeded my expectations. The hostels listed are well-maintained, and I felt confident knowing they were verified. The best part was the responsive customer service team, who helped me navigate the booking process.'
   },
   {
     id:3,
@@ -55,7 +56,7 @@ const testimonials=[
   }
 ]
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div>
       <Navbar/>
@@ -65,7 +66,7 @@ export default function Home() {
           <p className="w-3/4 text-sm text-justify font-semibold text-gray-900 mt-5 leading-loose max-sm:w-full">
             Find your perfect hostel with ease. Browse, book, 
             and stay - everything in one place. If you are a student, 
-            we've got the ideal space for you. Choose from a long list of 
+            we&apos;ve got the ideal space for you. Choose from a long list of 
             options. Start your journey today!
           </p>
           <div className="mt-5">
@@ -77,7 +78,7 @@ export default function Home() {
       </div>
       <div id="counts" className="flex justify-center py-20">
         <div className="grid grid-cols-3 gap-24 max-md:grid-cols-1 max-md:gap-10 ">
-          {counts.map((count:any) => (
+          {counts.map((count:Counts) => (
             <div id="individual" key={count.id} style={{ boxShadow: '10px 10px 15px rgba(0, 0, 0, 0.2)' }} className="bg-[#E7E7E7] w-56 rounded-2xl py-9 gap-3 flex flex-col items-center justify-center max-md:w-72 max-md:py-12">
               <Image src={count.image} alt="icons" className="w-10"/>
               <h4 className="text-4xl font-semibold text-[#E24848]">{count.number}</h4>
@@ -95,17 +96,17 @@ export default function Home() {
           <p className="text-sm leading-loose text-[#302F2F]">
             We are committed to making the search for student accommodation easy and 
             stress-free. Our platform offers a wide range of verified hostels, 
-            tailored specifically for students' needs. With a focus on convenience, 
+            tailored specifically for students&apos; needs. With a focus on convenience, 
             transparency, and 24/7 support, we ensure a smooth and reliable booking 
             process. Thousands of students have already found their ideal living 
-            space with us—now it's your turn!
+            space with us—now it&apos;s your turn!
             </p>
         </div>
       </div>
       <div id="testimonials" className="flex flex-col justify-center py-20">
         <h2 className="font-bold text-center text-5xl text-[#1E1846] max-lg:text-5xl max-md:text-3xl max-md:px-10">What Other Students had to say</h2>
         <div className="grid grid-cols-3 gap-24 mt-20 px-20 max-md:grid-cols-1 max-md:gap-10 ">
-          {testimonials.map((testimonial:any) => (
+          {testimonials.map((testimonial:Testimonials) => (
             <div id="individual" key={testimonial.id} className="gap-3 flex flex-col items-center justify-center">
               {testimonial.id==2 ? (
                 <>
