@@ -6,14 +6,14 @@ import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 
-export default function(){
+export default function UsersPage(){
     const [users, setUsers] = useState<Users[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
     const pageSize = 6; // Number of users per page
 
     useEffect(()=>{
         const getUsers = async () =>{
-            const data:any = await fetchUsers();
+            const data = await fetchUsers() as unknown as Users[] ;
             if (data) setUsers(data)
         }
         getUsers();
