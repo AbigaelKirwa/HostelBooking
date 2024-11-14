@@ -8,12 +8,12 @@ import { useState, useEffect } from "react"
 import { fetchAccomodations } from "./action"
 import { Accommodations } from "@/types"
 
-export default function(){
+export default function AccomodationsPage(){
     const [accomodations, setAccomodations] = useState<Accommodations[]>([]);
     
     useEffect (()=>{
         const getAccomodations = async () =>{
-            const data:any = await fetchAccomodations();
+            const data = await fetchAccomodations() as Accommodations[];
             setAccomodations(data);
         };
         getAccomodations();
