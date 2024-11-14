@@ -55,4 +55,12 @@ export interface Counts{
   number:string,
   name:string
 }
+
+export interface Footer{
+  id:number,
+  heading:string,
+  link_one:string,
+  link_two:string,
+  link_three:string
+}
   

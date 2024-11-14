@@ -3,6 +3,7 @@ import Facebook from "@/components/images/social_media/Facebook.png";
 import Share from "@/components/images/social_media/Share.png";
 import Image from "next/image";
 import { Input } from "./ui/input";
+import { Footer } from "@/types";
 
 const contacts = [
   {
@@ -28,12 +29,12 @@ const contacts = [
   },
 ];
 
-export default function () {
+export default function FooterPage() {
   return (
     <div id="footer" className="bg-gradient-to-r from-[#180F24] via-[#264A5A] to-[#1E1846] px-20 py-10">
       <div id="overall" className="flex flex-row justify-between max-md:flex-col max-md:justify-center max-md:items-center max-md:text-center max-md:gap-y-16">
         <div id="contacts" className="grid grid-cols-3 gap-x-20 text-white max-lg:grid-cols-2 max-lg:gap-y-10 max-md:grid-cols-1 max-md:gap-y-10 max-md:gap-x-0">
-          {contacts.map((contact: any) => (
+          {contacts.map((contact: Footer) => (
             <div key={contact.id} className="flex flex-col gap-y-8 max-md:gap-y-4">
               <h1 className="font-semibold text-lg">{contact.heading}</h1>
               <p className="text-sm">{contact.link_one}</p>
