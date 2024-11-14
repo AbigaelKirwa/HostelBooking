@@ -1,7 +1,7 @@
 'use client'
 import SideNavbar from "@/components/admin/SideNavbar"
 import AdminSummary from "@/components/admin/AdminSummary"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Dashboard from "@/components/admin/Dashboard"
 import Users from "@/components/admin/Users"
 import Payment from "@/components/admin/Payment"
@@ -9,8 +9,8 @@ import { confirmAdmin } from "@/hooks/confirmAdmin"
 import AccomodationsRead from "@/components/admin/AccomodationsRead"
 
 
-export default function(){
-    const [displayContent, setDisplayContent] = useState<any>(<Dashboard />); // Set initial content to Dashboard
+export default function LoginPage(){
+    const [displayContent, setDisplayContent] = useState<React.ReactNode>(<Dashboard />); // Set initial content to Dashboard
     const {isAdmin, isLoading} = confirmAdmin();
 
     useEffect(() => {
