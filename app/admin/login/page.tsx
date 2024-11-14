@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
                             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required placeholder="Password" className="placeholder-[#767575] text-xs bg-[#D9D9D9] border-none rounded-[8px] w-full py-5 pl-5" />
                         </div>
                         <div>
-                            <p className="text-xs text-end">Don't have an account? <Link href="/register"><b>Register</b></Link></p>
+                            <p className="text-xs text-end">Don&apos;t have an account? <Link href="/register"><b>Register</b></Link></p>
                         </div>
                         <div className="w-full flex justify-center mt-8">
                             <Button type="submit" className="bg-[#E24848] text-white font-semibold rounded-full px-12 py-5 hover:bg-teal-700">Login</Button>
