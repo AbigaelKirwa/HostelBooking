@@ -1,12 +1,6 @@
 "use client";
 
-import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-  } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import Link from "next/link";
 import ButtonPink from "./Button";
 import Image from "next/image";
@@ -14,19 +8,13 @@ import MenuImage from "@/components/images/icons/menu.png"
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut} from "firebase/auth";
 import {auth} from "@/lib/firebase"
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { toast } from "@/hooks/use-toast";
-
+import { User } from "firebase/auth";
 
 export default function Navbar() {
 
-  const [user, setUser]= useState<any>(null);
+  const [user, setUser]= useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -51,10 +39,10 @@ export default function Navbar() {
     return () => unsubscribe();
   }, []);
 
-  const getInitials = (user: any) => {
+  const getInitials = (user: User | null) => {
     if (!user) return "";
 
-    const name = user.displayName || user.email;
+    const name = user.displayName || user.email || "";
     const nameArray = name.split(/[@ ]/); // Split by space or @ for email
 
     if (nameArray.length > 1) {
@@ -74,7 +62,7 @@ export default function Navbar() {
         description: 'Logged out successfully',
         variant: "default"
       });
-    } catch (error) {
+    } catch {
       // Error occurred
       toast({
         variant: "destructive",
