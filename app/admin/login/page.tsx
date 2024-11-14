@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function Login() {
+export default function AdminLoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { toast } = useToast();
@@ -58,8 +58,8 @@ export default function Login() {
                 setEmail('');
                 setPassword('');
             }
-        } catch (error: any) {
-            console.log("Login error:", error.message);
+        } catch (error: unknown) {
+            console.log("Login error:", error);
             toast({
                 variant: "destructive",
                 title: "Uh oh! Something went wrong",
