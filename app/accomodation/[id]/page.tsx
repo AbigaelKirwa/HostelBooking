@@ -16,7 +16,7 @@ if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined){
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-export default function Accomodation() {
+export default function AccomodationPage() {
   const [accomodation, setAccomodation] = useState<Accommodations[]>([]);
   const [accomodationId, setAccomodationId] = useState<string | null>(null);
   const user = useAuth();
@@ -25,7 +25,7 @@ export default function Accomodation() {
 
     useEffect (()=>{
         const getAccomodations = async () =>{
-            const data:any = await fetchAccomodations();
+            const data = await fetchAccomodations() as Accommodations[]
             setAccomodation(data);
         };
         getAccomodations();
