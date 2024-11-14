@@ -1,7 +1,7 @@
 'use server'
 
 import {db, auth} from "../../lib/firebase";
-import { createUserWithEmailAndPassword, getIdTokenResult, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {collection, addDoc} from 'firebase/firestore';
 
 //server side function that will handle the form submission
@@ -25,8 +25,8 @@ export async function registerUser({fullname, email, password}:{fullname:string,
         })
         return {success:true, message:"user registered successfully!"};
     }
-    catch(error:any){
+    catch(error:unknown){
         console.log("this is the error", error)
-        return {success:false, message:error.message}
+        return {success:false}
     }
 }
