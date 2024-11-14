@@ -34,7 +34,7 @@ export default function Login() {
             setEmail('');
             setPassword('');
             window.location.replace('/accomodations')
-        } catch (error: any) {
+        } catch (error) {
             console.log("Login error:", error);
             toast({
                 variant: "destructive",
