@@ -32,4 +32,11 @@ export interface Payments{
   amount:number,
   createdAt:string,
 }
+
+export interface Questions{
+  id:string,
+  value:string,
+  query:string,
+  answer:string
+}
   
