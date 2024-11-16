@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Dialog, DialogContent, DialogTitle, DialogFooter, DialogOverlay } from "@/components/ui/dialog"; // Import shadcn components  
 import { updateAccomodation } from "./AccomodationsActions"; // Function to update accommodation
 import { Accommodations } from "@/types"; // Accommodation type
