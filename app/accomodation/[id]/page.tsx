@@ -8,18 +8,18 @@ import { fetchAccomodations } from "@/app/accomodations/action";
 import { useEffect, useState } from "react";
 import { Accommodations } from "@/types";
 import { loadStripe } from "@stripe/stripe-js";
-import {useAuth} from "@/hooks/useAuth"
+import {checkAuth} from "@/hooks/checkAuth"
+import { toast } from "@/hooks/use-toast";
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined){
   throw Error
 }
-
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export default function AccomodationPage() {
   const [accomodation, setAccomodation] = useState<Accommodations[]>([]);
   const [accomodationId, setAccomodationId] = useState<string | null>(null);
-  const user = useAuth();
+  const user = checkAuth();
   const userId = user ? user.uid : null; // Access userId only if user exists
   const userName = user ? user.fullname : null; // Access userName only if user exists
 
@@ -41,30 +41,39 @@ export default function AccomodationPage() {
     const handlePayment = async(amount:number, accomodationId:string, accomodationName:string)=>{
       try{
         console.log({ amount, userId, userName, accomodationId, accomodationName });
-        const response = await fetch('/api/checkout_sessions',{
-          method:'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({amount, userId, userName, accomodationId, accomodationName})
-        })
-        // Check if the response is ok
-        if (!response.ok) {
-          throw new Error(`Failed to create checkout session: ${response.statusText}`);
-        }
-  
-        const {sessionId} = await response.json()
-        const stripe = await stripePromise;
-  
-        if(stripe){
-          //redirect to stripe checkout
-          const {error} = await stripe.redirectToCheckout({ sessionId });
-          if (error) {
-            console.log("Error redirecting to checkout", error)
+        if(user){
+          const response = await fetch('/api/checkout_sessions',{
+            method:'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({amount, userId, userName, accomodationId, accomodationName})
+          })
+          // Check if the response is ok
+          if (!response.ok) {
+            throw new Error(`Failed to create checkout session: ${response.statusText}`);
+          }
+    
+          const {sessionId} = await response.json()
+          const stripe = await stripePromise;
+    
+          if(stripe){
+            //redirect to stripe checkout
+            const {error} = await stripe.redirectToCheckout({ sessionId });
+            if (error) {
+              console.log("Error redirecting to checkout", error)
+            }
+          }
+          else{
+            console.error("Stripe failed to initialize")
           }
         }
         else{
-          console.error("Stripe failed to initialize")
+          toast({
+            variant: "destructive",
+            title: "You are not logged in",
+            description: "To progress to payment, first log in",
+          });
         }
-      }
+        }
       catch(error){
         console.error('Error occurred during payment handling:', error);
       }
