@@ -4,7 +4,7 @@ import { createAccommodation } from "./AccomodationsActions";
 import { Accommodations } from "@/types";
 import { IoIosAddCircle } from "react-icons/io";
 
-export default function(){
+export default function AccomodationsCreate(){
     const [showModal, setShowModal] = useState(false); // State to control the modal
     const [newAccommodation, setNewAccommodation] = useState<{
         id:string;
