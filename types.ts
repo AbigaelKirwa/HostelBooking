@@ -23,6 +23,7 @@ export interface Users{
   id:string;
   fullname:string;
   email:string;
+  isAdmin:boolean;
 }
 
 export interface Payments{
