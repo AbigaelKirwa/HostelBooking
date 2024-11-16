@@ -7,13 +7,15 @@ type UpdateAccommodationProps = {
     accommodationId: string; // ID of the accommodation to be updated
     currentData: Accommodations; // Current data of the accommodation
     onClose: () => void; // Close the dialog
+    onRefresh: () => void;
 };
 
-export default function UpdateAccommodation({ accommodationId, currentData, onClose }: UpdateAccommodationProps) {
+export default function UpdateAccommodation({ accommodationId, currentData, onClose, onRefresh }: UpdateAccommodationProps) {
     const [newAccommodation, setNewAccommodation] = useState<Accommodations>(currentData);
 
     const handleUpdateAccommodation = async () => {
         await updateAccomodation({ id: accommodationId, data: newAccommodation });
+        onRefresh()//refresh accomodations
         onClose(); // Close the modal after successful update
     };
 

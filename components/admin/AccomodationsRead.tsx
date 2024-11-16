@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteAccomodation, fetchAccomodations} from "./AccomodationsActions"
+import { deleteAccomodation, fetchAccomodations } from "./AccomodationsActions"
 import { Accommodations } from "@/types"
 import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
@@ -59,11 +59,17 @@ export default function AccomodationsRead(){
         );
     };
 
+    // To refresh data when updated/created
+    const fetchAndSetAccomodations = async() =>{
+        const data = await fetchAccomodations() as unknown as Accommodations[]
+        if (data) setAccomodations(data)
+    }
+
     return(
         <div id="users" className="mt-5">
             <div className="flex gap-5">
                 <h2 className="text-sm text-[#04103B] font-bold">Accomodations</h2>
-                <AccomodationsCreate/>
+                <AccomodationsCreate onRefresh ={fetchAndSetAccomodations}/>
             </div>
             <div id="display_data" className="mt-5">
                 <table className="w-full border-[1.5px] border-[#EBE8FF] rounded-xl text-xs">
@@ -104,16 +110,16 @@ export default function AccomodationsRead(){
                                     <img className="w-40 h-20" src={hostel.interior_picture} alt="" />
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    {hostel.one_bedroom}
+                                    Ksh. {hostel.one_bedroom}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    {hostel.two_bedroom}
+                                    Ksh. {hostel.two_bedroom}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    {hostel.three_bedroom}
+                                    Ksh. {hostel.three_bedroom}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    {hostel.four_bedroom}
+                                    Ksh. {hostel.four_bedroom}
                                 </td>
                                 <td>
                                     <button onClick={()=>handleOpenUpdateModal(hostel)} className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
@@ -148,6 +154,7 @@ export default function AccomodationsRead(){
                     accommodationId={selectedAccommodation.id}
                     currentData={selectedAccommodation}
                     onClose={handleCloseUpdateModal}
+                    onRefresh = {fetchAndSetAccomodations}
                 />
             )}
         </div>

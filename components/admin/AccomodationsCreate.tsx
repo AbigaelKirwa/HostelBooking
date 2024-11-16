@@ -3,8 +3,12 @@ import { Dialog, DialogContent, DialogTitle, DialogFooter, DialogOverlay } from 
 import { createAccommodation } from "./AccomodationsActions";
 import { Accommodations } from "@/types";
 import { IoIosAddCircle } from "react-icons/io";
+type AccomodationsCreateProps = {
+    onRefresh: () => void;
+};
 
-export default function AccomodationsCreate(){
+
+export default function AccomodationsCreate({onRefresh}: AccomodationsCreateProps){
     const [showModal, setShowModal] = useState(false); // State to control the modal
     const [newAccommodation, setNewAccommodation] = useState<{
         id:string;
@@ -41,10 +45,14 @@ export default function AccomodationsCreate(){
         three_bedroom: null,
         four_bedroom: null
       });
-        //adding new accomodation
-        const handleAddAccommodation = async (newAccommodation:Accommodations) => {
-            await createAccommodation({data:newAccommodation})
+
+    //adding new accomodation
+    const handleAddAccommodation = async (newAccommodation:Accommodations) => {
+        const success = await createAccommodation({data:newAccommodation})
+        if(success){
+            onRefresh()
             setShowModal(false)
+            //set to null
             setNewAccommodation({
                 id:"",
                 name: "",
@@ -64,6 +72,7 @@ export default function AccomodationsCreate(){
                 four_bedroom: null
             })
         }
+    }
 
     return(
         <>

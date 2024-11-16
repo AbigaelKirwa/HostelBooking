@@ -52,7 +52,7 @@ export const createAccommodation = async ({ parentId = null, data }: { parentId?
 };
 
 // Unified function for updating accommodation document
-export const updateAccomodation = async ({ id, data }: { id: string, data: Accommodations }) => {
+export const updateAccomodation = async ({id, data}:{ id: string; data: Accommodations; }) => {
     try {
         // Remove id from data if it exists to avoid overwriting
         const { id: _unusedId, ...dataWithoutId } = data;
