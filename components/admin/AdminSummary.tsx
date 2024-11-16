@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-export default function(){
+export default function AdminSummary(){
     const [counts, setCounts] = useState({
         hostels: 0,
         payments: 0,
