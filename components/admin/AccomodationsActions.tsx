@@ -33,7 +33,7 @@ export const fetchAccomodations = async ()=>{
 // Unified function for creating documents in the main collection only
 export const createAccommodation = async ({ parentId = null, data }: { parentId?: string | null, data: Accommodations }) => {
     try {
-        const { id, ...dataWithoutId } = data;
+        const { id: _unusedId, ...dataWithoutId } = data;
 
         // Main collection reference
         const collectionRef = parentId 
@@ -55,7 +55,7 @@ export const createAccommodation = async ({ parentId = null, data }: { parentId?
 export const updateAccomodation = async ({ id, data }: { id: string, data: Accommodations }) => {
     try {
         // Remove id from data if it exists to avoid overwriting
-        const { id: dataId, ...dataWithoutId } = data;
+        const { id: _unusedId, ...dataWithoutId } = data;
 
         // Directly reference the document using the id
         const docRef = doc(db, "accomodations", id);
