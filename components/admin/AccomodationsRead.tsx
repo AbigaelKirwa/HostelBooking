@@ -1,6 +1,6 @@
 'use client'
 
-import { deleteAccomodation, fetchAccomodations, updateAccomodation } from "./AccomodationsActions"
+import { deleteAccomodation, fetchAccomodations} from "./AccomodationsActions"
 import { Accommodations } from "@/types"
 import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
@@ -8,7 +8,7 @@ import { FaArrowCircleRight } from "react-icons/fa";
 import AccomodationsCreate from "./AccomodationsCreate";
 import UpdateAccommodation from "./AccomodationsUpdate";
 
-export default function(){
+export default function AccomodationsRead(){
     const [accomodations, setAccomodations] = useState<Accommodations[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
     const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodations | null>(null);
@@ -17,7 +17,7 @@ export default function(){
     
     useEffect(()=>{
         const getAccomodations= async () =>{
-            const data:any = await fetchAccomodations();
+            const data = await fetchAccomodations() as unknown as Accommodations[];
             if (data) setAccomodations(data)
         }
         getAccomodations()
