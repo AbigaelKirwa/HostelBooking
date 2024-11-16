@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-export default function(){
+export default function SideNavbarPage(){
     const [highlight, setHighlight] = useState<string>("dashboard")
 
     const handleNavigation = (item:string)=>{
@@ -15,7 +15,7 @@ export default function(){
         <div id="sidenav" className="w-1/6 h-[100vh] flex justify-center items-center bg-gradient-to-b from-[#264A5A] to-[#1E1846] text-white text-sm font-semibold">
             <ul className="flex flex-col gap-16 w-full pl-10">
                 {['dashboard', 'hostels', 'payments', 'users'].map((item, index)=>(
-                <div>
+                <div key={index}>
                     <li 
                     key={index} 
                     onClick={()=>handleNavigation(item)}
