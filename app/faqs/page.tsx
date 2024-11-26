@@ -40,11 +40,16 @@ export default function FAQPage() {
         )):
         // if the questions array does not exist then display loader
         (
-            <div className="flex flex-col space-y-5">
-                <Skeleton className="h-[125px] w-[250px] rounded-xl bg-gray-200" />
-                <div className="space-y-2">
-                    <Skeleton className="h-4 w-[250px] bg-gray-200" />
-                    <Skeleton className="h-4 w-[200px] bg-gray-200" />
+            <div className="flex flex-col space-y-5 w-full items-center">
+                <Skeleton className="h-20 w-1/2 rounded-xl bg-gray-200 max-sm:w-full" />
+                <div className="flex flex-col space-y-2 w-full items-center">
+                    <Skeleton className="h-4 w-1/2 bg-gray-200 max-sm:w-full" />
+                    <Skeleton className="h-4 w-1/2 bg-gray-200 max-sm:w-full" />
+                </div>
+                <Skeleton className="h-20 w-1/2 rounded-xl bg-gray-200 max-sm:w-full" />
+                <div className="flex flex-col space-y-2 w-full items-center max-sm:w-full">
+                    <Skeleton className="h-4 w-1/2 bg-gray-200 max-sm:w-full" />
+                    <Skeleton className="h-4 w-1/2 bg-gray-200 max-sm:w-full" />
                 </div>
             </div>
         )

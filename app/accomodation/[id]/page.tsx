@@ -10,6 +10,8 @@ import { Accommodations } from "@/types";
 import { loadStripe } from "@stripe/stripe-js";
 import {checkAuth} from "@/hooks/checkAuth"
 import { toast } from "@/hooks/use-toast";
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 if (process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY === undefined){
   throw Error
@@ -19,6 +21,7 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
 export default function AccomodationPage() {
   const [accomodation, setAccomodation] = useState<Accommodations[]>([]);
   const [accomodationId, setAccomodationId] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const user = checkAuth();
   const userId = user ? user.uid : null; // Access userId only if user exists
   const userName = user ? user.fullname : null; // Access userName only if user exists
@@ -27,6 +30,7 @@ export default function AccomodationPage() {
         const getAccomodations = async () =>{
             const data = await fetchAccomodations() as Accommodations[]
             setAccomodation(data);
+            setLoading(false);
         };
         getAccomodations();
 
@@ -84,7 +88,33 @@ export default function AccomodationPage() {
     <div>
       <Navbar />
       <div>
-        {accomodation.map((specific_accomodation, index)=>(
+        {loading ? (
+          // if the questions array does not exist then display loader
+          (
+            <div className="flex flex-col p-20 gap-10 w-full max-sm:p-5">
+              <div className="flex flex-row w-full gap-x-20 justify-center items-center max-sm:flex-col max-sm:gap-x-2 max-sm:gap-y-5">
+                <div className="w-1/2 max-sm:w-full">
+                  <Skeleton className="h-40 w-full rounded-xl bg-gray-200" />
+                </div>
+                <div className="flex flex-col w-1/2 justify-center gap-y-4 max-sm:w-full">
+                    <Skeleton className="h-4 w-full bg-gray-200" />
+                    <Skeleton className="h-4 w-full bg-gray-200" />
+                    <Skeleton className="h-4 w-full bg-gray-200" />
+                </div>
+              </div>
+              <div className="flex flex-row-reverse w-full gap-x-20 justify-center items-center max-sm:flex-col max-sm:gap-x-2 max-sm:gap-y-5">
+                <div className="w-1/2 max-sm:w-full">
+                  <Skeleton className="h-40 w-full rounded-xl bg-gray-200" />
+                </div>
+                <div className="flex flex-col w-1/2 justify-center gap-y-4 max-sm:w-full">
+                    <Skeleton className="h-4 w-full bg-gray-200" />
+                    <Skeleton className="h-4 w-full bg-gray-200" />
+                    <Skeleton className="h-4 w-full bg-gray-200" />
+                </div>
+              </div>
+            </div>
+          )
+        ):accomodation.map((specific_accomodation, index)=>(
           accomodationId === specific_accomodation.id ? (
           <>
             <div key={index} className="px-20 py-10 flex justify-center items-center max-md:flex-col max-lg:px-5 max-md:gap-5">
