@@ -30,7 +30,7 @@ export default function FAQPage() {
         //if questions array exists then display the questions
         questions.map((question:Questions)=>(
         <Accordion type="single" collapsible className="w-1/2 mt-8 max-md:w-full" key={question.id}>
-            <AccordionItem value={question.value}>
+            <AccordionItem value={question.id}>
             <AccordionTrigger className="text-base font-semibold text-[#1E1846]">{question.query}</AccordionTrigger>
             <AccordionContent className="text-gray-700 leading-loose">
                 {question.answer}

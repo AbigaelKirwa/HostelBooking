@@ -1,10 +1,11 @@
 'use client'
 
-import { fetchQuestions } from "./QuestionsActions"
+import { deleteQuestion, fetchQuestions } from "./QuestionsActions"
 import { Questions } from "@/types"
 import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
+import QuestionsCreate from "./QuestionsCreate";
 
 export default function QuestionsPage(){
     const [questions, setQuestions] = useState<Questions[]>([])
@@ -38,31 +39,42 @@ export default function QuestionsPage(){
         }
     };
 
+    // Delete accommodation and refresh data
+    const handleDelete = async (id: string) => {
+        await deleteQuestion(id);
+        setQuestions((prevQuestions) =>
+            prevQuestions.filter(questions => questions.id !== id)
+        );
+    };
+
+    // To refresh data when updated/created
+    const fetchAndSetQuestions = async() =>{
+        const data = await fetchQuestions() as unknown as Questions[]
+        if (data) setQuestions(data)
+    }
+
     return(
         <div id="users" className="mt-5">
             <div className="flex gap-5">
-                <h2 className="text-sm text-[#04103B] font-bold">Accomodations</h2>
-                {/* <AccomodationsCreate onRefresh ={fetchAndSetAccomodations}/> */}
+                <h2 className="text-sm text-[#04103B] font-bold">Questions</h2>
+                <QuestionsCreate onRefresh ={fetchAndSetQuestions}/>
             </div>
             <div id="display_data" className="mt-5">
                 <table className="w-full border-[1.5px] border-[#EBE8FF] rounded-xl text-xs">
                     <thead className="bg-[#F3F4F6]">
                         <tr className="text-[#797D8C] font-semibold">
                             <th className="p-3">Question ID</th>
-                            <th className="p-3">Value</th>
                             <th className="p-3">Query</th>
                             <th className="p-3">Answer</th>
                             <th className="p-3">Controls</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {currentQuestions.map((question, index) => (
+                        {currentQuestions
+                        .map((question, index) => (
                             <tr key={index} className="border-b-[1.5px] border-[#EBE8FF] text-center">
                                 <td className="p-3 font-semibold text-[#797D8C]">
                                     {question.id.length > 12 ? `${question.id.substring(0, 12)}...` : question.id}
-                                </td>
-                                <td className="p-3 text-[#04103B] font-bold">
-                                    {question.value}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
                                     {question.query.length > 10 ? `${question.query.substring(0, 30)}...` : question.query}
@@ -72,7 +84,7 @@ export default function QuestionsPage(){
                                 </td>
                                 <td>
                                     <button className="bg-blue-600 text-white font-semibold py-2 px-3 mr-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
-                                    <button className="bg-red-600 text-white font-semibold py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
+                                    <button onClick={()=>{handleDelete(question.id)}} className="bg-red-600 text-white font-semibold py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
                         ))}

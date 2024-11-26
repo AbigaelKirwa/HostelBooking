@@ -38,7 +38,6 @@ export interface Payments{
 
 export interface Questions{
   id:string,
-  value:string,
   query:string,
   answer:string
 }
