@@ -91,39 +91,39 @@ export default function AccomodationsRead(){
                     <tbody>
                         {currentAccomodations.map((hostel, index) => (
                             <tr key={index} className="border-b-[1.5px] border-[#EBE8FF] text-center">
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     {hostel.id.length > 8 ? `${hostel.id.substring(0, 8)}...` : hostel.id}
                                 </td>
-                                <td className="p-3 text-[#04103B] font-bold">
+                                <td className="p-2 text-[#04103B] font-bold">
                                     {hostel.name}
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     {hostel.city}
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     {hostel.location}
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     <img className="w-20 h-10" src={hostel.exterior_picture} alt="" />
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     <img className="w-20 h-10" src={hostel.interior_picture} alt="" />
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     Ksh. {hostel.one_bedroom}
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     Ksh. {hostel.two_bedroom}
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     Ksh. {hostel.three_bedroom}
                                 </td>
-                                <td className="p-3 font-semibold text-[#797D8C]">
+                                <td className="p-2 font-semibold text-[#797D8C]">
                                     Ksh. {hostel.four_bedroom}
                                 </td>
                                 <td>
-                                    <button onClick={()=>handleOpenUpdateModal(hostel)} className="bg-blue-500 text-white py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
-                                    <button onClick={()=>{handleDelete(hostel.id)}} className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
+                                    <button onClick={()=>handleOpenUpdateModal(hostel)} className="bg-blue-600 text-white font-semibold py-2 px-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
+                                    <button onClick={()=>{handleDelete(hostel.id)}} className="bg-red-600 text-white py-2 font-semibold px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
                         ))}

@@ -71,8 +71,8 @@ export default function QuestionsPage(){
                                 {question.answer.length > 12 ? `${question.answer.substring(0, 30)}...` : question.answer}
                                 </td>
                                 <td>
-                                    <button className="bg-blue-500 text-white py-2 px-3 mr-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
-                                    <button className="bg-red-500 text-white py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
+                                    <button className="bg-blue-600 text-white font-semibold py-2 px-3 mr-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
+                                    <button className="bg-red-600 text-white font-semibold py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
                         ))}
