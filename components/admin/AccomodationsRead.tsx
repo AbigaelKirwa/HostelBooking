@@ -103,10 +103,10 @@ export default function AccomodationsRead(){
                                 <td className="p-2 font-semibold text-[#797D8C]">
                                     {hostel.location}
                                 </td>
-                                <td className="p-2 font-semibold text-[#797D8C]">
+                                <td className="p-1 font-semibold text-[#797D8C]">
                                     <img className="w-20 h-10" src={hostel.exterior_picture} alt="" />
                                 </td>
-                                <td className="p-2 font-semibold text-[#797D8C]">
+                                <td className="p-1 font-semibold text-[#797D8C]">
                                     <img className="w-20 h-10" src={hostel.interior_picture} alt="" />
                                 </td>
                                 <td className="p-2 font-semibold text-[#797D8C]">

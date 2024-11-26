@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge"
 export default function UsersPage(){
     const [users, setUsers] = useState<Users[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
-    const pageSize = 4; // Number of users per page
+    const pageSize = 5; // Number of users per page
 
     useEffect(()=>{
         const getUsers = async () =>{
@@ -68,11 +68,11 @@ export default function UsersPage(){
                     <tbody>
                         {currentUsers.map((user, index) => (
                             <tr key={index} className="border-b-[1.5px] border-[#EBE8FF] text-center">
-                                <td className="p-3 font-semibold text-[#797D8C]">{user.id}</td>
-                                <td className="p-3 font-semibold text-[#797D8C]">{user.fullname}</td>
-                                <td className="p-3 text-[#04103B] font-bold">{user.email}</td>
-                                <td className="p-3 text-[#04103B] font-bold"><Badge className={`px-3 py-1 rounded-full text-slate-800 ${user.isAdmin? 'bg-amber-300': 'bg-teal-300'}`}>{user.isAdmin? "True" :"False"}</Badge></td>
-                                <td className="p-3 text-[#04103B] font-bold"><button onClick={()=>toggleAdminSuccess(user.id,user.isAdmin)} className="bg-red-600 px-3 py-2 text-white rounded-lg">Change</button></td>
+                                <td className="p-2 font-semibold text-[#797D8C]">{user.id}</td>
+                                <td className="p-2 font-semibold text-[#797D8C]">{user.fullname}</td>
+                                <td className="p-2 text-[#04103B] font-bold">{user.email}</td>
+                                <td className="p-2 text-[#04103B] font-bold"><Badge className={`px-3 py-1 rounded-full text-slate-800 ${user.isAdmin? 'bg-amber-300': 'bg-teal-300'}`}>{user.isAdmin? "True" :"False"}</Badge></td>
+                                <td className="p-2 text-[#04103B] font-bold"><button onClick={()=>toggleAdminSuccess(user.id,user.isAdmin)} className="bg-red-600 px-3 py-2 text-white rounded-lg">Change</button></td>
                             </tr>
                         ))}
                     </tbody>
