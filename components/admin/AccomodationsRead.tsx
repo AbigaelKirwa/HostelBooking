@@ -13,7 +13,7 @@ export default function AccomodationsRead(){
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
     const [selectedAccommodation, setSelectedAccommodation] = useState<Accommodations | null>(null);
 
-    const pageSize = 2; // Number of users per page
+    const pageSize = 3; // Number of users per page
     
     useEffect(()=>{
         const getAccomodations= async () =>{
@@ -104,10 +104,10 @@ export default function AccomodationsRead(){
                                     {hostel.location}
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    <img className="w-40 h-20" src={hostel.exterior_picture} alt="" />
+                                    <img className="w-20 h-10" src={hostel.exterior_picture} alt="" />
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
-                                    <img className="w-40 h-20" src={hostel.interior_picture} alt="" />
+                                    <img className="w-20 h-10" src={hostel.interior_picture} alt="" />
                                 </td>
                                 <td className="p-3 font-semibold text-[#797D8C]">
                                     Ksh. {hostel.one_bedroom}

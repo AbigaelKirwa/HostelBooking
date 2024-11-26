@@ -7,22 +7,14 @@ import { Accommodations } from "@/types";
 export const fetchAccomodations = async ()=>{
     try{
         const querySnapshot = await getDocs(collection(db, "accomodations"));
-        const accomodations = await Promise.all(
-            querySnapshot.docs.map(async (doc)=>{
-                const subCollectionSnapshot = await getDocs(collection(doc.ref, "accomodation"))
-                const accomodationData = subCollectionSnapshot.docs.map(subDoc=>({
-                    id:subDoc.id,
-                    ...subDoc.data()
-                }));
-
-                return{
-                    id:doc.id,
-                    accomodationData, 
-                    ...doc.data()
-                }
-            })
-        )
-        return accomodations;
+        const accomodations = querySnapshot.docs.map((doc)=>{
+            const accomodationData = doc.data()
+            return{
+                id:doc.id,
+                ...accomodationData
+            }
+        })
+        return accomodations
     }
     catch(error){
         console.error("error fetching accomodations", error);

@@ -7,6 +7,7 @@ import Users from "@/components/admin/Users"
 import Payment from "@/components/admin/Payment"
 import { confirmAdmin } from "@/hooks/confirmAdmin"
 import AccomodationsRead from "@/components/admin/AccomodationsRead"
+import QuestionsPage from "@/components/admin/QuestionsRead"
 
 export default function LoginPage(){
     const [displayContent, setDisplayContent] = useState<React.ReactNode>(<Dashboard />); // Set initial content to Dashboard
@@ -25,6 +26,9 @@ export default function LoginPage(){
             }
             else if(hash === "hostels"){
                 setDisplayContent(<AccomodationsRead/>)
+            }
+            else if(hash === 'questions'){
+                setDisplayContent(<QuestionsPage/>)
             }
             else {
                 setDisplayContent(<Dashboard />)

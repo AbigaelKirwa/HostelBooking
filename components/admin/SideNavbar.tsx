@@ -18,9 +18,8 @@ export default function SideNavbarPage(){
     }
 
     return(
-        <div id="sidenav" className="w-1/6 h-[100vh] flex justify-center items-center bg-gradient-to-b from-[#264A5A] to-[#1E1846] text-white text-sm font-semibold">
-            <ul className="flex flex-col gap-16 w-full pl-10">
-                <div className="flex justify-center">
+        <div id="sidenav" className="w-1/6 h-[100vh] flex flex-col justify-center items-center bg-gradient-to-b from-[#264A5A] to-[#1E1846] text-white text-sm font-semibold">
+            <div className="flex justify-center mb-16">
                 {user ? (
                     <DropdownMenu>
                         <DropdownMenuTrigger>
@@ -40,9 +39,10 @@ export default function SideNavbarPage(){
                         <span className="text-xs">Login</span>
                     </ButtonPink>
                     </Link>
-                    )}
-                </div>
-                {['dashboard', 'hostels', 'payments', 'users'].map((item, index)=>(
+                )}
+            </div>
+            <ul className="flex flex-col gap-8 w-full pl-10">
+                {['dashboard', 'hostels', 'payments', 'users', 'questions'].map((item, index)=>(
                 <div key={index}>
                     <li 
                     key={index} 
