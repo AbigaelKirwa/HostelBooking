@@ -1,9 +1,15 @@
 'use client'
 
 import { useState } from "react"
+import { userAuthState } from "../UserAuthState"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import Link from "next/link"
+import ButtonPink from "../Button"
+
 
 export default function SideNavbarPage(){
     const [highlight, setHighlight] = useState<string>("dashboard")
+    const {user, getInitials, handleSignOut} = userAuthState()
 
     const handleNavigation = (item:string)=>{
         //directly set window location
@@ -14,6 +20,28 @@ export default function SideNavbarPage(){
     return(
         <div id="sidenav" className="w-1/6 h-[100vh] flex justify-center items-center bg-gradient-to-b from-[#264A5A] to-[#1E1846] text-white text-sm font-semibold">
             <ul className="flex flex-col gap-16 w-full pl-10">
+                <div className="flex justify-center">
+                {user ? (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                        <div className="flex items-center gap-2">Welcome 
+                        <div className="w-10 h-10 bg-[#E24848] text-white font-semibold flex items-center justify-center rounded-full">
+                            {getInitials(user)}
+                        </div>
+                        </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="bg-white">
+                            <DropdownMenuLabel onClick={handleSignOut} className="cursor-pointer">Logout</DropdownMenuLabel>
+                        </DropdownMenuContent>
+                    </DropdownMenu>        
+                    ):(
+                    <Link href="/login">
+                    <ButtonPink paddingY="1px" paddingX="2em">
+                        <span className="text-xs">Login</span>
+                    </ButtonPink>
+                    </Link>
+                    )}
+                </div>
                 {['dashboard', 'hostels', 'payments', 'users'].map((item, index)=>(
                 <div key={index}>
                     <li 

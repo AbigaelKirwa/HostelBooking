@@ -5,72 +5,12 @@ import Link from "next/link";
 import ButtonPink from "./Button";
 import Image from "next/image";
 import MenuImage from "@/components/images/icons/menu.png"
-import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut} from "firebase/auth";
-import {auth} from "@/lib/firebase"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { toast } from "@/hooks/use-toast";
-import { User } from "firebase/auth";
+import { userAuthState } from "./UserAuthState";
 
 export default function Navbar() {
 
-  const [user, setUser]= useState<User | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log("Auth state changed. Current user:", currentUser);
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-        console.log("No user is authenticated.");
-      }
-    });
-
-    // You can call onAuthStateChanged manually after login to ensure the UI updates
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Update the user state immediately after login
-        setUser(user);
-        // console.log("user details updated", user)
-      }
-    });
-  
-    return () => unsubscribe();
-  }, []);
-
-  const getInitials = (user: User | null) => {
-    if (!user) return "";
-
-    const name = user.displayName || user.email || "";
-    const nameArray = name.split(/[@ ]/); // Split by space or @ for email
-
-    if (nameArray.length > 1) {
-      return (nameArray[0][0] + nameArray[1][0]).toUpperCase();
-    } else {
-      return nameArray[0][0].toUpperCase(); // First letter of displayName or email
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      // Sign out successful
-      setUser(null);
-      toast({
-        title: 'Success',
-        description: 'Logged out successfully',
-        variant: "default"
-      });
-    } catch {
-      // Error occurred
-      toast({
-        variant: "destructive",
-        title: "Uh oh! something went wrong",
-        description: "There was a problem logging you out",
-      });
-    }
-  };
+  const {user, getInitials, handleSignOut} = userAuthState();
   
   return (
     <nav className="w-full flex items-center py-3 bg-gradient-to-r from-[#180F24] via-[#264A5A] to-[#1E1846] px-5">

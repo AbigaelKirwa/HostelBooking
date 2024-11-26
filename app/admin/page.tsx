@@ -8,14 +8,11 @@ import Payment from "@/components/admin/Payment"
 import { confirmAdmin } from "@/hooks/confirmAdmin"
 import AccomodationsRead from "@/components/admin/AccomodationsRead"
 
-
 export default function LoginPage(){
     const [displayContent, setDisplayContent] = useState<React.ReactNode>(<Dashboard />); // Set initial content to Dashboard
     const {isAdmin, isLoading} = confirmAdmin();
 
-    useEffect(() => {
-        
-
+    useEffect(() => {       
         const handleHashChange = () => {
             const hash = window.location.hash.substring(1);
             // Dynamically set content based on the current hash
