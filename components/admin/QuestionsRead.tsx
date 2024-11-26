@@ -6,11 +6,13 @@ import { useEffect, useState } from "react"
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { FaArrowCircleRight } from "react-icons/fa";
 import QuestionsCreate from "./QuestionsCreate";
+import UpdateQuestion from "./QuestionsUpdate";
 
 export default function QuestionsPage(){
     const [questions, setQuestions] = useState<Questions[]>([])
     const [currentPage, setCurrentPage] = useState(1); // Tracks the current page
     const pageSize = 5; // Number of users per page
+    const [selectedQuestion, setSelectedQuestion] = useState<Questions | null>(null);
 
     useEffect(()=>{
         const getQuestions = async () =>{
@@ -53,6 +55,16 @@ export default function QuestionsPage(){
         if (data) setQuestions(data)
     }
 
+    //update accomodation
+    const handleOpenUpdateModal = (question: Questions) => {
+        setSelectedQuestion(question);
+    };
+
+    const handleCloseUpdateModal = () => {
+        setSelectedQuestion(null);
+    };
+
+
     return(
         <div id="users" className="mt-5">
             <div className="flex gap-5">
@@ -83,7 +95,7 @@ export default function QuestionsPage(){
                                 {question.answer.length > 12 ? `${question.answer.substring(0, 30)}...` : question.answer}
                                 </td>
                                 <td>
-                                    <button className="bg-blue-600 text-white font-semibold py-2 px-3 mr-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
+                                    <button onClick={()=>handleOpenUpdateModal(question)} className="bg-blue-600 text-white font-semibold py-2 px-3 mr-3 rounded hover:bg-blue-800 transition-colors my-2">Update</button>
                                     <button onClick={()=>{handleDelete(question.id)}} className="bg-red-600 text-white font-semibold py-2 px-3.5 rounded hover:bg-red-800 transition-colors mb-2">Delete</button>
                                 </td>
                             </tr>
@@ -110,6 +122,14 @@ export default function QuestionsPage(){
                 <FaArrowCircleRight />
                 </button>
             </div>
+            {selectedQuestion && (
+                <UpdateQuestion
+                    questionsId={selectedQuestion.id}
+                    currentData={selectedQuestion}
+                    onClose={handleCloseUpdateModal}
+                    onRefresh = {fetchAndSetQuestions}
+                />
+            )}
         </div>
     )
 }

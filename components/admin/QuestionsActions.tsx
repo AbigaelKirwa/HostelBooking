@@ -1,6 +1,6 @@
 'use server'
 
-import {collection, getDocs, addDoc, doc, deleteDoc} from "firebase/firestore"
+import {collection, getDocs, addDoc, doc, deleteDoc, updateDoc} from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { Questions } from "@/types"
 
@@ -34,9 +34,18 @@ export const createQuestion = async (data:{query:string, answer:string}) =>{
 export const deleteQuestion = async (id:string)=>{
     try{
         await deleteDoc(doc(db,'questions',id))
-        return id;
     }catch(error){
         console.log("Error deleting question", error)
         return null
+    }
+}
+
+export const updateQuestion = async({id, data}:{id:string, data:Questions})=>{
+    try{
+        //remove id if it exists in the data being sent
+        const {id: unusedId, ...dataWithoutId} = data
+        await updateDoc(doc(db,'questions', id),dataWithoutId)
+    }catch(error){
+        console.log("Error updating question", error)
     }
 }
