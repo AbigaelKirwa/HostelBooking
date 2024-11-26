@@ -96,7 +96,7 @@ export default function AccomodationPage() {
                 <div className="w-1/2 max-sm:w-full">
                   <Skeleton className="h-40 w-full rounded-xl bg-gray-200" />
                 </div>
-                <div className="flex flex-col w-1/2 justify-center gap-y-4 max-sm:w-full">
+                <div className="flex flex-col w-1/2 justify-center gap-y-2 max-sm:w-full">
                     <Skeleton className="h-4 w-full bg-gray-200" />
                     <Skeleton className="h-4 w-full bg-gray-200" />
                     <Skeleton className="h-4 w-full bg-gray-200" />
@@ -106,7 +106,7 @@ export default function AccomodationPage() {
                 <div className="w-1/2 max-sm:w-full">
                   <Skeleton className="h-40 w-full rounded-xl bg-gray-200" />
                 </div>
-                <div className="flex flex-col w-1/2 justify-center gap-y-4 max-sm:w-full">
+                <div className="flex flex-col w-1/2 justify-center gap-y-2 max-sm:w-full">
                     <Skeleton className="h-4 w-full bg-gray-200" />
                     <Skeleton className="h-4 w-full bg-gray-200" />
                     <Skeleton className="h-4 w-full bg-gray-200" />

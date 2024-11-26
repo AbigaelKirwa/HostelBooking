@@ -8,6 +8,44 @@ import Payment from "@/components/admin/Payment"
 import { confirmAdmin } from "@/hooks/confirmAdmin"
 import AccomodationsRead from "@/components/admin/AccomodationsRead"
 import QuestionsPage from "@/components/admin/QuestionsRead"
+import { Skeleton } from "@/components/ui/skeleton"
+
+const loadingElements = ()=>{
+    return(
+        <div className="flex">
+            <div id="side-bar" className="w-1/4 bg-gray-300 h-[100vh]"></div>
+            <div id="main" className="w-3/4 h-100vh items-center p-10 gap-5">
+                <div className="grid grid-cols-3 justify-center items-center gap-x-20 mb-20">
+                    <div className="w-full">
+                        <Skeleton className="h-32 rounded-xl bg-gray-200" />
+                    </div>
+                    <div className="w-full">
+                        <Skeleton className="h-32 rounded-xl bg-gray-200" />
+                    </div>
+                    <div className="w-full">
+                        <Skeleton className="h-32 rounded-xl bg-gray-200" />
+                    </div>
+                </div>
+                <div className="flex flex-col justify-center w-full gap-y-5">
+                    <div className="flex w-full justify-center items-center">
+                        <Skeleton className="h-20 w-full rounded-xl bg-gray-200 max-sm:w-full" />
+                    </div>
+                    <div className="flex flex-col space-y-2 w-full items-center">
+                        <Skeleton className="h-4 w-full bg-gray-200" />
+                        <Skeleton className="h-4 w-full bg-gray-200" />
+                    </div>
+                    <div className="flex w-full justify-center items-center">
+                        <Skeleton className="h-20 w-full rounded-xl bg-gray-200 max-sm:w-full" />
+                    </div>
+                    <div className="flex flex-col space-y-2 w-full items-center">
+                        <Skeleton className="h-4 w-full bg-gray-200" />
+                        <Skeleton className="h-4 w-full bg-gray-200" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default function LoginPage(){
     const [displayContent, setDisplayContent] = useState<React.ReactNode>(<Dashboard />); // Set initial content to Dashboard
@@ -50,7 +88,7 @@ export default function LoginPage(){
     confirmAdmin()
 
     if (isLoading) {
-        return <p>Loading...</p>; // Display loading message while checking admin status
+        return loadingElements(); // Display loading message while checking admin status
     }   
 
     return isAdmin?(
@@ -63,5 +101,5 @@ export default function LoginPage(){
                 </div>
             </div>
         </div>
-    ):<><p>nothing to be shown</p></>
+    ):(loadingElements())
 }
