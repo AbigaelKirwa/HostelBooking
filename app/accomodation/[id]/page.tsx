@@ -140,17 +140,17 @@ export default function AccomodationPage() {
                 <p className="text-sm leading-loose text-[#302F2F]">{specific_accomodation.paragraph_two}</p>
               </div>
             </div>
-            <div id="payment_plans" className="py-10">
+            <div id="payment_plans" className="py-10 max-sm:py-8">
               <h2 className="font-bold text-center text-6xl my-10 text-[#1E1846] max-lg:text-5xl max-md:text-4xl max-md:px-10 max-sm:leading-relaxed">
                 Our Payment Plans
               </h2>
-              <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10 max-sm:px-8">
+              <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10 max-sm:px-8 max-sm:py-5">
                   {[specific_accomodation.four_bedroom, specific_accomodation.three_bedroom, specific_accomodation.two_bedroom, specific_accomodation.one_bedroom].map((bedroom, index)=>{
                     // Add null check for 'bedroom'
                     if (bedroom === null) return null; // Skip rendering if bedroom is null
                     return(
                       <div key={index} className="flex flex-col gap-y-3 px-10 py-10 rounded-3xl text-sm text-center" style={{background: "#D9D9D9", boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.2)", color:"black"}}>
-                    <h2 className="font-bold text-3xl mb-5 max-sm:mb-3">{index +1} Bedroom</h2>
+                    <h2 className="font-bold text-3xl mb-5 max-sm:mb-2">{index +1} Bedroom</h2>
                     <p>Monthly Plan: Ksh.{bedroom}</p>
                     <p>Semester Plan: (4 months): Ksh.{bedroom * 4}</p>
                     <p>Annual Plan: (12 months): Ksh.{bedroom * 12}</p>
