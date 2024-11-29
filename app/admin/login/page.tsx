@@ -73,7 +73,7 @@ export default function AdminLoginPage() {
         <div>
             <Navbar />
             <div id="overall" className="flex justify-center py-11">
-                <div id="right" className="w-1/3 h-[70vh] px-10 py-5 pt-24 bg-[#EBEBEB] rounded-[40px] max-md:mx-10 max-md:py-20 max-md:pt-28 max-md:w-full">
+                <div id="right" className="w-1/3 h-[450px] px-10 py-5 pt-24 bg-[#EBEBEB] rounded-[40px] max-md:mx-10 max-md:py-20 max-md:pt-28 max-md:w-full">
                     <h1 className="font-bold text-2xl text-[#1E1846]">Login</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="my-5">

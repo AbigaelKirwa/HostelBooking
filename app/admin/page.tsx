@@ -13,8 +13,8 @@ import { Skeleton } from "@/components/ui/skeleton"
 const loadingElements = ()=>{
     return(
         <div className="flex">
-            <div id="side-bar" className="w-1/4 bg-gray-300 h-[100vh]"></div>
-            <div id="main" className="w-3/4 h-100vh items-center p-10 gap-5">
+            <div id="side-bar" className="w-1/4 bg-gray-300"></div>
+            <div id="main" className="w-3/4 items-center p-10 gap-5">
                 <div className="grid grid-cols-3 justify-center items-center gap-x-20 mb-20">
                     <div className="w-full">
                         <Skeleton className="h-32 rounded-xl bg-gray-200" />
