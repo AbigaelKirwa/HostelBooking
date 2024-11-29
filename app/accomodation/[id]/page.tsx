@@ -150,11 +150,11 @@ export default function AccomodationPage() {
                     if (bedroom === null) return null; // Skip rendering if bedroom is null
                     return(
                       <div key={index} className="flex flex-col gap-y-3 px-10 py-10 rounded-3xl text-sm text-center" style={{background: "#D9D9D9", boxShadow: "10px 10px 15px rgba(0, 0, 0, 0.2)", color:"black"}}>
-                    <h2 className="font-bold text-3xl mb-5">{index +1} Bedroom</h2>
+                    <h2 className="font-bold text-3xl mb-5 max-sm:mb-3">{index +1} Bedroom</h2>
                     <p>Monthly Plan: Ksh.{bedroom}</p>
                     <p>Semester Plan: (4 months): Ksh.{bedroom * 4}</p>
                     <p>Annual Plan: (12 months): Ksh.{bedroom * 12}</p>
-                    <div className="flex justify-center gap-5">
+                    <div className="flex justify-center gap-5 max-sm:flex-col max-sm:gap-1">
                       <button
                         onClick={() => handlePayment(bedroom, specific_accomodation.id, specific_accomodation.name)} // Monthly payment
                         className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
@@ -165,7 +165,7 @@ export default function AccomodationPage() {
                       <button
                         onClick={() => handlePayment(bedroom * 4, specific_accomodation.id, specific_accomodation.name)} // Semester payment
                         className="text-white text-xs font-semibold rounded-full mt-5 px-[2em] py-[1em] hover:bg-teal-700"
-                        style={{ background: "#264A5A" }}
+                        style={{ background: "#E24848" }}
                       >
                         Pay Semester
                       </button>

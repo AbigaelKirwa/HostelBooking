@@ -92,7 +92,7 @@ export default function HomePage() {
           <Image src={AboutImage} alt="confused"/>
         </div>
         <div id="words" className="w-1/2 flex flex-col justify-center items-center px-10 gap-10 max-md:w-full max-md:flex max-md:justify-center max-md:items-center max-md:gap-5">
-          <h2 className="font-bold text-6xl text-[#1E1846] max-lg:text-5xl max-md:text-4xl">Why Choose Us?</h2>
+          <h2 className="font-bold text-center text-6xl text-[#1E1846] max-lg:text-5xl max-md:text-4xl">Why Choose Us?</h2>
           <p className="text-sm leading-loose text-[#302F2F] text-justify">
             We are committed to making the search for student accommodation easy and 
             stress-free. Our platform offers a wide range of verified hostels, 

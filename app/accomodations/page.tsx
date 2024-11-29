@@ -53,11 +53,11 @@ export default function AccomodationsPage(){
                         </div>
                     </div>
                 ): (
-                    <div className="grid grid-cols-3 gap-x-14 gap-y-10 px-20 py-10 justify-center items-center max-lg:grid-cols-2 max-md:grid-cols-1">
+                    <div className="grid grid-cols-3 gap-x-14 gap-y-10 px-20 py-10 justify-center items-center max-lg:grid-cols-2 max-md:grid-cols-1 max-sm:px-10">
                         {accomodations.map((accomodation)=>(
                             <div className="rounded-xl" style={{background:accomodation.background}} key={accomodation.id}>
                                 <div>
-                                    <img src={accomodation.exterior_picture} alt="hostel" className="rounded-t-xl w-full h-[40vh]"/>
+                                    <img src={accomodation.exterior_picture} alt="hostel" className="rounded-t-xl w-full h-[40vh] max-sm:h-[28vh]"/>
                                 </div>
                                 <div className="py-3 px-10">
                                     <div className="flex flex-col gap-y-5 mt-5 text-sm" style={{color:accomodation.text_color}}>
