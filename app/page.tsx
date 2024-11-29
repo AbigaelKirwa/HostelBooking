@@ -76,8 +76,8 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div id="counts" className="flex justify-center py-20">
-        <div className="grid grid-cols-3 gap-24 max-md:grid-cols-1 max-md:gap-10 ">
+      <div id="counts" className="flex justify-center py-20 max-lg:px-10">
+        <div className="grid grid-cols-3 gap-24 max-md:grid-cols-1 max-lg:gap-10">
           {counts.map((count:Counts) => (
             <div id="individual" key={count.id} style={{ boxShadow: '10px 10px 15px rgba(0, 0, 0, 0.2)' }} className="bg-[#E7E7E7] w-56 rounded-2xl py-9 gap-3 flex flex-col items-center justify-center max-md:w-72 max-md:py-12">
               <Image src={count.image} alt="icons" className="w-10"/>
@@ -87,13 +87,13 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      <div id="about" className="px-20 flex justify-center items-center max-md:flex-col max-md:px-5 max-md:gap-5">
+      <div id="about" className="px-20 flex justify-center items-center max-md:flex-col max-lg:px-5 max-lg:gap-5">
         <div id="image" className="w-1/2 max-md:w-full max-md:flex max-md:justify-center max-md:items-center">
           <Image src={AboutImage} alt="confused"/>
         </div>
-        <div id="words" className="w-1/2 flex flex-col justify-center items-center px-10 text-justify gap-10 max-md:w-full max-md:flex max-md:justify-center max-md:items-center max-md:gap-5">
+        <div id="words" className="w-1/2 flex flex-col justify-center items-center px-10 gap-10 max-md:w-full max-md:flex max-md:justify-center max-md:items-center max-md:gap-5">
           <h2 className="font-bold text-6xl text-[#1E1846] max-lg:text-5xl max-md:text-4xl">Why Choose Us?</h2>
-          <p className="text-sm leading-loose text-[#302F2F]">
+          <p className="text-sm leading-loose text-[#302F2F] text-justify">
             We are committed to making the search for student accommodation easy and 
             stress-free. Our platform offers a wide range of verified hostels, 
             tailored specifically for students&apos; needs. With a focus on convenience, 
@@ -105,7 +105,7 @@ export default function HomePage() {
       </div>
       <div id="testimonials" className="flex flex-col justify-center py-20">
         <h2 className="font-bold text-center text-5xl text-[#1E1846] max-lg:text-5xl max-md:text-3xl max-md:px-10">What Other Students had to say</h2>
-        <div className="grid grid-cols-3 gap-24 mt-20 px-20 max-md:grid-cols-1 max-md:gap-10 ">
+        <div className="grid grid-cols-3 gap-24 mt-20 px-20 max-lg:px-10 max-lg:gap-14 max-md:grid-cols-1 max-md:gap-10 ">
           {testimonials.map((testimonial:Testimonials) => (
             <div id="individual" key={testimonial.id} className="gap-3 flex flex-col items-center justify-center">
               {testimonial.id==2 ? (
