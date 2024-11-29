@@ -57,7 +57,7 @@ export default function AccomodationsPage(){
                         {accomodations.map((accomodation)=>(
                             <div className="rounded-xl" style={{background:accomodation.background}} key={accomodation.id}>
                                 <div>
-                                    <img src={accomodation.exterior_picture} alt="hostel" className="rounded-t-xl w-full h-[40vh] max-sm:h-[28vh]"/>
+                                    <img src={accomodation.exterior_picture} alt="hostel" className="rounded-t-xl w-full h-[200px]"/>
                                 </div>
                                 <div className="py-3 px-10">
                                     <div className="flex flex-col gap-y-5 mt-5 text-sm" style={{color:accomodation.text_color}}>
