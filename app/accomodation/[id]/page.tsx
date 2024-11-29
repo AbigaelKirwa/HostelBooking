@@ -141,10 +141,10 @@ export default function AccomodationPage() {
               </div>
             </div>
             <div id="payment_plans" className="py-10">
-              <h2 className="font-bold text-center text-6xl my-10 text-[#1E1846] max-lg:text-5xl max-md:text-4xl max-md:px-10">
+              <h2 className="font-bold text-center text-6xl my-10 text-[#1E1846] max-lg:text-5xl max-md:text-4xl max-md:px-10 max-sm:leading-relaxed">
                 Our Payment Plans
               </h2>
-              <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10">
+              <div className="grid grid-cols-2 gap-x-20 gap-y-20 px-20 py-10 justify-center items-center max-lg:grid-cols-1 max-lg:px-40 max-md:px-10 max-sm:px-8">
                   {[specific_accomodation.four_bedroom, specific_accomodation.three_bedroom, specific_accomodation.two_bedroom, specific_accomodation.one_bedroom].map((bedroom, index)=>{
                     // Add null check for 'bedroom'
                     if (bedroom === null) return null; // Skip rendering if bedroom is null

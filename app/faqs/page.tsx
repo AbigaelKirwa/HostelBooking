@@ -25,7 +25,7 @@ export default function FAQPage() {
     <div>
       <Navbar />
       <div className="flex flex-col px-20 py-14 items-center justify-center max-md:px-10">
-      <h2 className="font-bold text-center text-5xl text-[#1E1846] mb-5 max-lg:text-5xl max-md:text-4xl">Common Questions</h2>
+      <h2 className="font-bold text-center text-5xl text-[#1E1846] mb-5 max-lg:text-5xl max-md:text-4xl max-sm:leading-relaxed">Common Questions</h2>
         {loading === false ?
         //if questions array exists then display the questions
         questions.map((question:Questions)=>(
